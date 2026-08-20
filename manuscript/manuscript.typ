@@ -550,7 +550,9 @@ Simulations were executed within OpenFOAM v2606 using finite-volume discretizati
 $ (partial rho) / (partial t) + nabla dot (rho bold(u)) = 0 $
 $ (partial (rho bold(u))) / (partial t) + nabla dot (rho bold(u) bold(u)) = -nabla p_("rgh") + bold(g) rho + nabla dot bold(tau)_("eff") + bold(S)_m $
 $ (partial (rho h)) / (partial t) + nabla dot (rho bold(u) h) = nabla dot (alpha_("eff") nabla h) + S_h $
-Turbulence was modeled using $k$-$omega" SST"$ (Menter 1994) with near-wall prism layers ($y^+ approx 1 - 5$). Porous root substrates and micropore tape interfaces were resolved using Brinkman-Darcy formulations.
+Turbulence was modeled using $k$-$omega" SST"$ (Menter 1994) with near-wall prism layers ($y^+ approx 1 - 5$). Vegetative canopies were parameterized as porous media via Darcy-Forchheimer drag sinks:
+$ bold(S)_m = -rho (mu / K bold(u) + 1/2 C_d a_v |bold(u)| bold(u)) $
+where $a_v = "LAI"/h_c$ is Leaf Area Density and $C_d = 0.2$. In BRIC-LED, transient 4h ON / 4h OFF diurnal cycles were resolved via conjugate heat transfer coupling LED surface flux ($q'' = 35" W/m"^2$) and moisture phase change ($dot(m)_("cond") h_(f g)$).
 
 === Interactive 3D WebGL Dashboard & Multimedia
 Interactive WebGL 3D visualizations, animated 4D simulations, and mesh dictionaries are openly accessible:

@@ -6,76 +6,89 @@
   <title>Interactive 3D Spaceflight Flow Explorer | CFD WebGL</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #0f172a; color: #f8fafc; overflow: hidden; height: 100vh; display: flex; }
-    #sidebar { width: 380px; background: #1e293b; border-right: 1px solid #334155; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; z-index: 10; overflow-y: auto; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #0a0f1d; color: #f8fafc; overflow: hidden; height: 100vh; display: flex; }
+    #sidebar { width: 400px; background: #131d31; border-right: 1px solid #1e293b; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.9rem; z-index: 10; overflow-y: auto; box-shadow: 4px 0 16px rgba(0,0,0,0.4); }
     #viewport { flex: 1; position: relative; }
     #canvas3d { width: 100%; height: 100%; display: block; }
     
-    h1 { font-size: 1.25rem; font-weight: 700; color: #38bdf8; }
-    .subtitle { font-size: 0.78rem; color: #94a3b8; margin-top: 0.2rem; }
+    h1 { font-size: 1.2rem; font-weight: 800; color: #38bdf8; letter-spacing: -0.02em; }
+    .subtitle { font-size: 0.75rem; color: #94a3b8; margin-top: 0.15rem; }
     
-    .control-group { background: #0f172a; padding: 0.85rem; border-radius: 0.5rem; border: 1px solid #334155; }
-    .control-group label { display: block; font-size: 0.75rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    select, button, input[type="range"] { width: 100%; padding: 0.55rem 0.75rem; border-radius: 0.4rem; border: 1px solid #475569; background: #1e293b; color: white; font-size: 0.82rem; outline: none; }
+    .control-group { background: #0b1326; padding: 0.75rem 0.85rem; border-radius: 0.5rem; border: 1px solid #1e293b; }
+    .control-group label { display: block; font-size: 0.72rem; font-weight: 700; color: #cbd5e1; margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    select, button, input[type="range"] { width: 100%; padding: 0.5rem 0.7rem; border-radius: 0.35rem; border: 1px solid #334155; background: #1a263e; color: white; font-size: 0.8rem; outline: none; transition: border 0.2s; }
     select:focus { border-color: #38bdf8; }
     
-    .range-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: #94a3b8; margin-top: 0.3rem; }
+    .range-label { display: flex; justify-content: space-between; font-size: 0.72rem; color: #94a3b8; margin-top: 0.25rem; }
     
     .btn-action { background: #0284c7; font-weight: 600; cursor: pointer; transition: background 0.2s; border: none; }
     .btn-action:hover { background: #0369a1; }
-    .btn-danger { background: #e11d48; border: none; font-weight: 600; cursor: pointer; transition: background 0.2s; padding: 0.65rem; border-radius: 0.4rem; color: white; font-size: 0.82rem; }
+    .btn-danger { background: #e11d48; border: none; font-weight: 600; cursor: pointer; transition: background 0.2s; padding: 0.6rem; border-radius: 0.35rem; color: white; font-size: 0.8rem; }
     .btn-danger:hover { background: #be123c; }
+    .btn-photoperiod { background: #8b5cf6; border: none; font-weight: 600; cursor: pointer; transition: background 0.2s; padding: 0.55rem; border-radius: 0.35rem; color: white; font-size: 0.78rem; margin-top: 0.4rem; }
+    .btn-photoperiod:hover { background: #7c3aed; }
     
-    .telemetry-box { background: #020617; padding: 0.85rem; border-radius: 0.5rem; border: 1px solid #1e293b; font-family: monospace; font-size: 0.78rem; line-height: 1.55; }
-    .telemetry-row { display: flex; justify-content: space-between; margin-bottom: 0.2rem; }
+    .telemetry-box { background: #050b18; padding: 0.75rem; border-radius: 0.4rem; border: 1px solid #1e293b; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.74rem; line-height: 1.5; }
+    .telemetry-row { display: flex; justify-content: space-between; margin-bottom: 0.15rem; }
     .telemetry-val { color: #38bdf8; font-weight: bold; }
     .val-danger { color: #f43f5e; }
     .val-warning { color: #fbbf24; }
     .val-success { color: #34d399; }
     
-    #overlay-info { position: absolute; top: 1.25rem; right: 1.25rem; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); padding: 1rem 1.25rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1); max-width: 340px; font-size: 0.82rem; pointer-events: none; }
-    #overlay-info h3 { color: #38bdf8; margin-bottom: 0.3rem; font-size: 0.95rem; }
+    #overlay-info { position: absolute; top: 1.25rem; right: 1.25rem; background: rgba(11, 19, 38, 0.92); backdrop-filter: blur(10px); padding: 1rem 1.25rem; border-radius: 0.6rem; border: 1px solid rgba(56, 189, 248, 0.25); max-width: 360px; font-size: 0.8rem; pointer-events: none; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+    #overlay-info h3 { color: #38bdf8; margin-bottom: 0.3rem; font-size: 0.92rem; }
     
-    .badge-port { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 0.25rem; font-size: 0.7rem; font-weight: bold; }
+    .badge-port { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 0.25rem; font-size: 0.68rem; font-weight: bold; }
     .badge-inlet { background: #0284c7; color: white; }
     .badge-outlet { background: #e11d48; color: white; }
+    .badge-led { background: #f59e0b; color: black; }
     
-    .nav-link { color: #94a3b8; font-size: 0.82rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; margin-top: auto; padding-top: 0.5rem; }
+    .nav-link { color: #94a3b8; font-size: 0.78rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; margin-top: auto; padding-top: 0.4rem; }
     .nav-link:hover { color: #38bdf8; }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body>
 
   <div id="sidebar">
     <div>
       <h1>3D Spaceflight Flow Explorer</h1>
-      <div class="subtitle">OpenFOAM CFD Multi-Chamber Visualizer</div>
+      <div class="subtitle">OpenFOAM Navier-Stokes Pathline & Thermal Simulator</div>
     </div>
 
     <div class="control-group">
       <label for="hardwareSelect">Hardware Architecture</label>
       <select id="hardwareSelect">
         <option value="aph">NASA Advanced Plant Habitat (APH - Ducted Ports)</option>
-        <option value="veggie">NASA VEGGIE (VPS - Top Suction)</option>
+        <option value="veggie">NASA VEGGIE (VPS - Top Suction Fan)</option>
+        <option value="bric">NASA BRIC / BRIC-LED (PDFU Internal Dish)</option>
+        <option value="cara">CARA Square Dish (ISS Rack Wall-Mounted)</option>
         <option value="chromex">NASA CHROMEX (PGU / PGC Creeping)</option>
-        <option value="cara">CARA Square Dish (Wall-Mounted on ISS)</option>
-        <option value="bric">NASA BRIC / BRIC-LED (Sealed Canister)</option>
       </select>
     </div>
 
-    <div class="control-group">
-      <label for="canopySlider">Canopy Size & Transpiration Stage</label>
+    <div class="control-group" id="canopyControlGroup">
+      <label for="canopySlider">Plant Canopy Porous Drag & LAI</label>
       <input type="range" id="canopySlider" min="20" max="100" value="70" step="5">
       <div class="range-label">
         <span>Seedling (LAI 0.5)</span>
         <span id="canopyStageText" style="color:#38bdf8; font-weight:bold;">Vegetative (LAI 2.2)</span>
-        <span>Full (LAI 4.0)</span>
+        <span>Mature (LAI 4.0)</span>
       </div>
     </div>
 
+    <div class="control-group" id="bricDiurnalGroup" style="display:none;">
+      <label>BRIC-LED Diurnal Photoperiod (4h ON / 4h OFF)</label>
+      <select id="bricLedState">
+        <option value="on">4h LED ON (Top Thermal Flux +4.8K, Evaporation)</option>
+        <option value="off">4h LED OFF (Rapid Lid Cooling, Condensation Onset)</option>
+      </select>
+      <button id="togglePhotoperiodBtn" class="btn-photoperiod">🌓 Toggle 4h/4h Photoperiod Phase</button>
+    </div>
+
     <div class="control-group">
-      <label for="gravitySelect">Gravitational Environment</label>
+      <label for="gravitySelect">Gravitational Regime</label>
       <select id="gravitySelect">
         <option value="0g">Microgravity (0 g) - ISS / Deep Space</option>
         <option value="moon">Moon (0.166 g) - Artemis Base</option>
@@ -87,26 +100,27 @@
     <div class="control-group">
       <label for="flowSelect">Airflow Operational Regime</label>
       <select id="flowSelect">
-        <option value="nominal">Flight Baseline / Nominal</option>
-        <option value="low">Low Draft (Seedling / Flight Min)</option>
+        <option value="nominal">Flight Nominal Baseline</option>
+        <option value="low">Low Draft (Flight Min / Stagnant)</option>
         <option value="high">High Blast (Max Blower)</option>
-        <option value="cutoff">Zero Airflow (Fan Stoppage / Failure)</option>
+        <option value="cutoff">Zero Airflow (Fan Failure Test)</option>
       </select>
     </div>
 
     <button id="fanStopBtn" class="btn-danger">⚡ Trigger Fan Cutoff Emergency Test</button>
 
     <div class="control-group">
-      <label>Live Telemetry & Transpiration Flux</label>
+      <label>Live Aerodynamic & Thermal Telemetry</label>
       <div class="telemetry-box">
+        <div class="telemetry-row"><span>Flow Driver / Inlet:</span><span id="telInlet" class="telemetry-val">Dual 0.60 m/s Slots</span></div>
         <div class="telemetry-row"><span>Canopy Vel ($U$):</span><span id="telU" class="telemetry-val">0.600 m/s</span></div>
-        <div class="telemetry-row"><span>Boundary Layer ($\delta_{bl}$):</span><span id="telDelta" class="telemetry-val">1.63 mm</span></div>
+        <div class="telemetry-row"><span>Canopy Drag ($F_d$):</span><span id="telDrag" class="telemetry-val val-warning">14.2 mN</span></div>
+        <div class="telemetry-row"><span>Turbulence ($k$):</span><span id="telTke" class="telemetry-val">11.9e-3 m²/s²</span></div>
         <div class="telemetry-row"><span>Conductance ($g_{bl}$):</span><span id="telGbl" class="telemetry-val val-success">1.071 mol/m²s</span></div>
         <div class="telemetry-row"><span>Transpiration ($E$):</span><span id="telTransp" class="telemetry-val val-success">4.82 mmol/m²s</span></div>
-        <div class="telemetry-row"><span>Vapor Flux ($\text{H}_2\text{O}$):</span><span id="telWaterFlux" class="telemetry-val val-success">585 mL/day</span></div>
-        <div class="telemetry-row"><span>Stagnant Vol %:</span><span id="telStag" class="telemetry-val val-success">2.6 %</span></div>
+        <div class="telemetry-row"><span>Daily Flux ($\text{H}_2\text{O}$):</span><span id="telWaterFlux" class="telemetry-val val-success">585 mL/day</span></div>
+        <div class="telemetry-row"><span>Lid $\Delta T$ / Condens:</span><span id="telCondens" class="telemetry-val val-success">Clear (No Droplets)</span></div>
         <div class="telemetry-row"><span>$\text{O}_2$ Hypoxia Status:</span><span id="telHypoxia" class="telemetry-val val-success">Optimal (&gt;20%)</span></div>
-        <div class="telemetry-row"><span>Ethylene ($\text{C}_2\text{H}_4$):</span><span id="telEthylene" class="telemetry-val val-success">&lt;0.05 ppm</span></div>
       </div>
     </div>
 
@@ -116,13 +130,13 @@
   <div id="viewport">
     <div id="overlay-info">
       <h3 id="infoTitle">NASA Advanced Plant Habitat (APH)</h3>
-      <p id="infoDesc">Dual lateral supply slots (<span class="badge-port badge-inlet">Supply Inlets</span>) sweep across the 4-quadrant Science Carrier at $z=51\text{mm}$, colliding at the sagittal midline to drive uniform upward displacement toward ceiling exhaust strips (<span class="badge-port badge-outlet">Exhaust</span>).</p>
+      <p id="infoDesc">Air packets inject from dual <span class="badge-port badge-inlet">Lateral Supply Inlets</span> ($z=51-66\text{mm}$), sweep across the Science Carrier, collide along the sagittal midline to drive uniform upward displacement through the canopy, and exhaust through <span class="badge-port badge-outlet">Ceiling Strips</span>.</p>
     </div>
     <canvas id="canvas3d"></canvas>
   </div>
 
   <script>
-    // --- THREE.JS 3D SCENE SETUP ---
+    // --- THREE.JS 3D SCENE & ORBIT CONTROLS ---
     const canvas = document.getElementById('canvas3d');
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
     renderer.setSize(canvas.clientWidth, canvas.clientHeight);
@@ -132,66 +146,162 @@
     scene.background = new THREE.Color(0x0a0f1d);
 
     const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    camera.position.set(13, 10, 16);
-    camera.lookAt(0, 2.5, 0);
+    camera.position.set(12, 10, 15);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.target.set(0, 2.8, 0);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
-    const dirLight = new THREE.DirectionalLight(0x38bdf8, 1.2);
+    const dirLight = new THREE.DirectionalLight(0x38bdf8, 1.3);
     dirLight.position.set(10, 20, 10);
     scene.add(dirLight);
 
-    const grid = new THREE.GridHelper(22, 22, 0x334155, 0x1e293b);
+    const grid = new THREE.GridHelper(20, 20, 0x334155, 0x1e293b);
     grid.position.y = -0.05;
     scene.add(grid);
 
     const chamberGroup = new THREE.Group();
     scene.add(chamberGroup);
 
-    // Streamline Particle System
-    const particleCount = 1500;
+    // --- HARDWARE-ACCURATE PARTICLE PATHLINE SYSTEM ---
+    const maxParticles = 2000;
     const particleGeo = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(particleCount * 3);
-    const particleColors = new Float32Array(particleCount * 3);
-    const particleVelocities = [];
+    const particlePositions = new Float32Array(maxParticles * 3);
+    const particleColors = new Float32Array(maxParticles * 3);
 
-    for (let i = 0; i < particleCount; i++) {
-      particlePositions[i * 3] = (Math.random() - 0.5) * 6;
-      particlePositions[i * 3 + 1] = Math.random() * 5.5;
-      particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 6;
-      
-      particleColors[i * 3] = 0.2;
-      particleColors[i * 3 + 1] = 0.7;
-      particleColors[i * 3 + 2] = 1.0;
-
-      particleVelocities.push({
-        vx: (Math.random() - 0.5) * 0.02,
-        vy: 0.03 + Math.random() * 0.04,
-        vz: (Math.random() - 0.5) * 0.02
+    // Array of particle states
+    const particles = [];
+    for (let i = 0; i < maxParticles; i++) {
+      particles.push({
+        x: 0, y: 0, z: 0,
+        vx: 0, vy: 0, vz: 0,
+        life: 0, maxLife: 100,
+        phase: 0, source: 0,
+        r: 0.2, g: 0.7, b: 1.0
       });
+      particlePositions[i*3] = 0;
+      particlePositions[i*3+1] = -100;
+      particlePositions[i*3+2] = 0;
+      particleColors[i*3] = 0.2;
+      particleColors[i*3+1] = 0.7;
+      particleColors[i*3+2] = 1.0;
     }
 
     particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
     particleGeo.setAttribute('color', new THREE.BufferAttribute(particleColors, 3));
 
     const particleMat = new THREE.PointsMaterial({
-      size: 0.12,
+      size: 0.14,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85
+      opacity: 0.9
     });
 
     const particleSystem = new THREE.Points(particleGeo, particleMat);
     scene.add(particleSystem);
 
+    // Condensation droplet beads group (for BRIC lid)
+    const dropletGroup = new THREE.Group();
+    scene.add(dropletGroup);
+
+    let currentHardware = 'aph';
     let currentCanopyMesh = null;
+    let bricLedMesh = null;
+
+    // --- SPAWN PARTICLES BASED ON HARDWARE INLETS ---
+    function spawnParticle(p, hw) {
+      p.life = 0;
+      p.maxLife = 120 + Math.random() * 80;
+
+      if (hw === 'veggie') {
+        // VEGGIE: Spawns at 4 base perimeter slots (z=0.1, edges of floor)
+        p.source = Math.floor(Math.random() * 4);
+        const edgePos = (Math.random() - 0.5) * 4.4;
+        if (p.source === 0) { p.x = -2.4; p.z = edgePos; p.y = 0.15; } // left slot
+        else if (p.source === 1) { p.x = 2.4; p.z = edgePos; p.y = 0.15; } // right slot
+        else if (p.source === 2) { p.z = -2.4; p.x = edgePos; p.y = 0.15; } // front slot
+        else { p.z = 2.4; p.x = edgePos; p.y = 0.15; } // back slot
+
+        p.vx = -p.x * 0.015 + (Math.random() - 0.5) * 0.01;
+        p.vz = -p.z * 0.015 + (Math.random() - 0.5) * 0.01;
+        p.vy = 0.015 + Math.random() * 0.01;
+        p.r = 0.0; p.g = 0.8; p.b = 0.8; // Teal
+
+      } else if (hw === 'aph') {
+        // APH: Spawns at dual lateral inports at z = 51-66mm (x = -2.9 and x = +2.9)
+        p.source = Math.random() < 0.5 ? -1 : 1;
+        p.x = p.source * 2.85;
+        p.y = 0.95 + (Math.random() - 0.5) * 0.2;
+        p.z = (Math.random() - 0.5) * 5.2;
+
+        p.vx = -p.source * (0.05 + Math.random() * 0.02); // Shoot inward across SC
+        p.vy = 0.005;
+        p.vz = (Math.random() - 0.5) * 0.01;
+        p.r = 0.2; p.g = 0.6; p.b = 1.0; // Blue
+
+      } else if (hw === 'bric') {
+        // BRIC: Confined inside internal PDFU Petri dish cylinder (radius 1.8, y from 0.8 to 2.8)
+        const angle = Math.random() * Math.PI * 2;
+        const rad = Math.random() * 1.7;
+        p.x = Math.cos(angle) * rad;
+        p.z = Math.sin(angle) * rad;
+        p.y = 0.8 + Math.random() * 2.0;
+
+        const isLedOn = document.getElementById('bricLedState').value === 'on';
+        if (isLedOn) {
+          // Warm stratification: top particles are hot red/amber
+          const warmFactor = (p.y - 0.8) / 2.0;
+          p.r = 0.95; p.g = 0.3 + 0.5 * (1 - warmFactor); p.b = 0.1;
+          p.vx = (Math.random() - 0.5) * 0.003;
+          p.vy = (Math.random() - 0.5) * 0.003;
+          p.vz = (Math.random() - 0.5) * 0.003;
+        } else {
+          // Cool condensation state: cool cyan/blue
+          p.r = 0.2; p.g = 0.6; p.b = 0.95;
+          p.vx = (Math.random() - 0.5) * 0.002;
+          p.vy = (Math.random() - 0.5) * 0.002;
+          p.vz = (Math.random() - 0.5) * 0.002;
+        }
+
+      } else if (hw === 'cara') {
+        // CARA: Passive drift across ISS rack wall
+        p.x = -2.6 + Math.random() * 1.0;
+        p.y = 1.5 + Math.random() * 4.0;
+        p.z = (Math.random() - 0.5) * 4.0;
+        p.vx = 0.005;
+        p.vy = 0.008 + (Math.random() - 0.5) * 0.004;
+        p.vz = (Math.random() - 0.5) * 0.005;
+        p.r = 0.6; p.g = 0.4; p.b = 0.8;
+
+      } else if (hw === 'chromex') {
+        // CHROMEX: PGC creeping flow
+        p.x = (Math.random() - 0.5) * 5.0;
+        p.y = 0.6 + Math.random() * 0.3;
+        p.z = (Math.random() - 0.5) * 2.8;
+        p.vx = (Math.random() - 0.5) * 0.002;
+        p.vy = 0.006 + Math.random() * 0.004;
+        p.vz = (Math.random() - 0.5) * 0.002;
+        p.r = 0.9; p.g = 0.5; p.b = 0.1;
+      }
+    }
+
+    // Initialize all particles
+    particles.forEach(p => spawnParticle(p, 'aph'));
 
     // --- REBUILD 3D HARDWARE GEOMETRY ---
     function rebuildGeometry(hw) {
+      currentHardware = hw;
       while(chamberGroup.children.length > 0) {
         chamberGroup.remove(chamberGroup.children[0]);
       }
+      while(dropletGroup.children.length > 0) {
+        dropletGroup.remove(dropletGroup.children[0]);
+      }
       currentCanopyMesh = null;
+      bricLedMesh = null;
 
       const boxMat = new THREE.MeshStandardMaterial({
         color: 0x334155,
@@ -201,8 +311,16 @@
       });
 
       const canopyScale = parseFloat(document.getElementById('canopySlider').value) / 100.0;
+      const isBric = (hw === 'bric');
+
+      // Toggle UI groups
+      document.getElementById('canopyControlGroup').style.display = isBric ? 'none' : 'block';
+      document.getElementById('bricDiurnalGroup').style.display = isBric ? 'block' : 'none';
 
       if (hw === 'aph') {
+        controls.target.set(0, 2.8, 0);
+        camera.position.set(12, 10, 15);
+
         // APH Phytotron Enclosure
         const enclosure = new THREE.Mesh(new THREE.BoxGeometry(6, 6, 6), boxMat);
         enclosure.position.y = 3;
@@ -214,88 +332,142 @@
         chamberGroup.add(carrier);
 
         // Science Carrier Dividers (Quadrant partition cross)
-        const divX = new THREE.Mesh(new THREE.BoxGeometry(5.8, 0.9, 0.1), new THREE.MeshStandardMaterial({ color: 0x38bdf8 }));
+        const divX = new THREE.Mesh(new THREE.BoxGeometry(5.8, 0.85, 0.08), new THREE.MeshStandardMaterial({ color: 0x38bdf8 }));
         divX.position.y = 0.45;
         chamberGroup.add(divX);
-        const divZ = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.9, 5.8), new THREE.MeshStandardMaterial({ color: 0x38bdf8 }));
+        const divZ = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.85, 5.8), new THREE.MeshStandardMaterial({ color: 0x38bdf8 }));
         divZ.position.y = 0.45;
         chamberGroup.add(divZ);
 
-        // Supply Inlets (Lateral slots at z = 51-66mm)
-        const leftInlet = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.3, 5.6), new THREE.MeshStandardMaterial({ color: 0x0284c7, emissive: 0x0284c7, emissiveIntensity: 0.6 }));
+        // Dual Supply Inlets (Lateral slots at z = 51-66mm)
+        const leftInlet = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.35, 5.4), new THREE.MeshStandardMaterial({ color: 0x0284c7, emissive: 0x0284c7, emissiveIntensity: 0.8 }));
         leftInlet.position.set(-2.9, 0.95, 0);
         chamberGroup.add(leftInlet);
 
-        const rightInlet = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.3, 5.6), new THREE.MeshStandardMaterial({ color: 0x0284c7, emissive: 0x0284c7, emissiveIntensity: 0.6 }));
+        const rightInlet = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.35, 5.4), new THREE.MeshStandardMaterial({ color: 0x0284c7, emissive: 0x0284c7, emissiveIntensity: 0.8 }));
         rightInlet.position.set(2.9, 0.95, 0);
         chamberGroup.add(rightInlet);
 
-        // Ceiling GLA LED Panel & Exhaust Strips
+        // Ceiling GLA LED Panel & 4 Exhaust Strips
         const gla = new THREE.Mesh(new THREE.BoxGeometry(5.2, 0.15, 5.2), new THREE.MeshStandardMaterial({ color: 0xfef08a, emissive: 0xfef08a, emissiveIntensity: 0.7 }));
         gla.position.y = 5.9;
         chamberGroup.add(gla);
 
-        // 4 Ceiling Exhaust Strips
-        const exNorth = new THREE.Mesh(new THREE.BoxGeometry(5.8, 0.2, 0.3), new THREE.MeshStandardMaterial({ color: 0xe11d48, emissive: 0xe11d48, emissiveIntensity: 0.6 }));
-        exNorth.position.set(0, 5.9, -2.8);
+        // 4 Ceiling Perimeter Exhaust Strips
+        const exNorth = new THREE.Mesh(new THREE.BoxGeometry(5.8, 0.18, 0.25), new THREE.MeshStandardMaterial({ color: 0xe11d48, emissive: 0xe11d48, emissiveIntensity: 0.8 }));
+        exNorth.position.set(0, 5.9, -2.85);
         chamberGroup.add(exNorth);
-        const exSouth = new THREE.Mesh(new THREE.BoxGeometry(5.8, 0.2, 0.3), new THREE.MeshStandardMaterial({ color: 0xe11d48, emissive: 0xe11d48, emissiveIntensity: 0.6 }));
-        exSouth.position.set(0, 5.9, 2.8);
+        const exSouth = new THREE.Mesh(new THREE.BoxGeometry(5.8, 0.18, 0.25), new THREE.MeshStandardMaterial({ color: 0xe11d48, emissive: 0xe11d48, emissiveIntensity: 0.8 }));
+        exSouth.position.set(0, 5.9, 2.85);
         chamberGroup.add(exSouth);
+        const exEast = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.18, 5.8), new THREE.MeshStandardMaterial({ color: 0xe11d48, emissive: 0xe11d48, emissiveIntensity: 0.8 }));
+        exEast.position.set(2.85, 5.9, 0);
+        chamberGroup.add(exEast);
+        const exWest = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.18, 5.8), new THREE.MeshStandardMaterial({ color: 0xe11d48, emissive: 0xe11d48, emissiveIntensity: 0.8 }));
+        exWest.position.set(-2.85, 5.9, 0);
+        chamberGroup.add(exWest);
 
-        // Scalable Plant Canopy
+        // Scalable Vegetative Canopy (Porous Zone)
         const canopyH = 3.2 * canopyScale;
-        const canopy = new THREE.Mesh(new THREE.BoxGeometry(5.0, canopyH, 5.0), new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.7 }));
+        const canopy = new THREE.Mesh(new THREE.BoxGeometry(5.2, canopyH, 5.2), new THREE.MeshStandardMaterial({ color: 0x10b981, transparent: true, opacity: 0.55, roughness: 0.8 }));
         canopy.position.y = 0.8 + canopyH/2;
         chamberGroup.add(canopy);
         currentCanopyMesh = canopy;
 
       } else if (hw === 'veggie') {
+        controls.target.set(0, 2.6, 0);
+        camera.position.set(11, 9, 14);
+
         // VEGGIE Enclosure
-        const enclosure = new THREE.Mesh(new THREE.BoxGeometry(5, 5.5, 5), boxMat);
-        enclosure.position.y = 2.75;
+        const enclosure = new THREE.Mesh(new THREE.BoxGeometry(5, 5.4, 5), boxMat);
+        enclosure.position.y = 2.7;
         chamberGroup.add(enclosure);
 
-        // Top Suction Fan
-        const fan = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.2, 24), new THREE.MeshStandardMaterial({ color: 0xe11d48, emissive: 0xe11d48, emissiveIntensity: 0.7 }));
-        fan.position.y = 5.4;
+        // Top Centered Suction Fan (Pink/Red active cylinder port)
+        const fan = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 0.35, 32), new THREE.MeshStandardMaterial({ color: 0xe11d48, emissive: 0xf43f5e, emissiveIntensity: 0.85 }));
+        fan.position.set(0, 5.4, 0);
         chamberGroup.add(fan);
 
-        // 6 Pillows
+        // 4 Passive Base Intake Slots
+        const slotMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, emissive: 0x0284c7, emissiveIntensity: 0.7 });
+        const slotL = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.25, 4.8), slotMat);
+        slotL.position.set(-2.45, 0.15, 0); chamberGroup.add(slotL);
+        const slotR = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.25, 4.8), slotMat);
+        slotR.position.set(2.45, 0.15, 0); chamberGroup.add(slotR);
+        const slotF = new THREE.Mesh(new THREE.BoxGeometry(4.8, 0.25, 0.15), slotMat);
+        slotF.position.set(0, 0.15, -2.45); chamberGroup.add(slotF);
+        const slotB = new THREE.Mesh(new THREE.BoxGeometry(4.8, 0.25, 0.15), slotMat);
+        slotB.position.set(0, 0.15, 2.45); chamberGroup.add(slotB);
+
+        // 6 Plant Pillows & Foliage
         for (let x = -1.2; x <= 1.2; x += 2.4) {
           for (let z = -1.5; z <= 1.5; z += 1.5) {
-            const pillow = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.5, 1.2), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+            const pillow = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.45, 1.2), new THREE.MeshStandardMaterial({ color: 0x5c4033 }));
             pillow.position.set(x, 0.25, z);
             chamberGroup.add(pillow);
             
-            const plantH = 1.6 * canopyScale;
-            const plant = new THREE.Mesh(new THREE.SphereGeometry(plantH * 0.5, 8, 8), new THREE.MeshStandardMaterial({ color: 0x10b981 }));
-            plant.position.set(x, 0.5 + plantH * 0.4, z);
+            const plantH = 1.8 * canopyScale;
+            const plant = new THREE.Mesh(new THREE.SphereGeometry(plantH * 0.45, 12, 12), new THREE.MeshStandardMaterial({ color: 0x10b981, transparent: true, opacity: 0.75 }));
+            plant.position.set(x, 0.45 + plantH * 0.4, z);
             chamberGroup.add(plant);
           }
         }
-      } else if (hw === 'chromex') {
-        // PGU Chassis
-        const chassis = new THREE.Mesh(new THREE.BoxGeometry(7, 4.5, 4), boxMat);
-        chassis.position.y = 2.25;
-        chamberGroup.add(chassis);
 
-        for (let i = -2.5; i <= 2.5; i += 1.0) {
-          const canister = new THREE.Mesh(new THREE.BoxGeometry(0.8, 3.2, 3.2), new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.4 }));
-          canister.position.set(i, 2.0, 0);
-          chamberGroup.add(canister);
+      } else if (hw === 'bric') {
+        // BRIC: Zoom in to internal PDFU Petri dish microclimate!
+        controls.target.set(0, 1.8, 0);
+        camera.position.set(4.5, 3.2, 5.0);
 
-          const foam = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.6, 3.0), new THREE.MeshStandardMaterial({ color: 0x8d6e63 }));
-          foam.position.set(i, 0.7, 0);
-          chamberGroup.add(foam);
+        // Transparent Cutaway PDFU Enclosure
+        const cylinderGeo = new THREE.CylinderGeometry(2.0, 2.0, 2.5, 32, 1, true, 0, Math.PI * 1.5);
+        const cylinderMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.25, side: THREE.DoubleSide });
+        const bricChamber = new THREE.Mesh(cylinderGeo, cylinderMat);
+        bricChamber.position.y = 1.8;
+        chamberGroup.add(bricChamber);
+
+        // Base Nutrient Agar Layer
+        const agar = new THREE.Mesh(new THREE.CylinderGeometry(1.95, 1.95, 0.35, 32), new THREE.MeshStandardMaterial({ color: 0xd97706, transparent: true, opacity: 0.6 }));
+        agar.position.y = 0.75;
+        chamberGroup.add(agar);
+
+        // Arabidopsis Seedling Germlings on Agar
+        for (let i = 0; i < 18; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const rad = Math.random() * 1.5;
+          const seedling = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.35, 8), new THREE.MeshStandardMaterial({ color: 0x22c55e }));
+          seedling.position.set(Math.cos(angle)*rad, 1.05, Math.sin(angle)*rad);
+          chamberGroup.add(seedling);
         }
+
+        // Top LED Cap (Illumination & Thermal Flux)
+        const isLedOn = document.getElementById('bricLedState').value === 'on';
+        const ledColor = isLedOn ? 0xf59e0b : 0x334155;
+        const ledEmissive = isLedOn ? 0xf59e0b : 0x000000;
+        bricLedMesh = new THREE.Mesh(new THREE.CylinderGeometry(2.05, 2.05, 0.25, 32), new THREE.MeshStandardMaterial({ color: ledColor, emissive: ledEmissive, emissiveIntensity: isLedOn ? 0.9 : 0 }));
+        bricLedMesh.position.y = 3.0;
+        chamberGroup.add(bricLedMesh);
+
+        // Rebuild Droplet Beads if LED OFF (Condensation Phase)
+        if (!isLedOn) {
+          for (let i = 0; i < 45; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const rad = Math.random() * 1.8;
+            const droplet = new THREE.Mesh(new THREE.SphereGeometry(0.04 + Math.random()*0.04, 8, 8), new THREE.MeshStandardMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.85 }));
+            droplet.position.set(Math.cos(angle)*rad, 2.85, Math.sin(angle)*rad);
+            dropletGroup.add(droplet);
+          }
+        }
+
       } else if (hw === 'cara') {
-        // ISS Wall / Rack Panel
+        controls.target.set(0, 3.5, 0);
+        camera.position.set(10, 8, 12);
+
+        // ISS Rack Wall
         const rackWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 7, 7), new THREE.MeshStandardMaterial({ color: 0x1e293b }));
         rackWall.position.set(-2.5, 3.5, 0);
         chamberGroup.add(rackWall);
 
-        // CARA Square Dishes "stuck" to the ISS wall
+        // Square Dishes on ISS Rack Wall
         for (let dy = -1.2; dy <= 1.2; dy += 2.4) {
           const plate = new THREE.Mesh(new THREE.BoxGeometry(0.6, 2.0, 2.0), new THREE.MeshStandardMaterial({ color: 0x94a3b8, transparent: true, opacity: 0.6 }));
           plate.position.set(-2.1, 3.5 + dy, 0);
@@ -309,16 +481,27 @@
           seedlings.position.set(-2.0, 3.5 + dy, 0);
           chamberGroup.add(seedlings);
         }
-      } else if (hw === 'bric') {
-        // Sealed PDFU Canister (Zero external air)
-        const canister = new THREE.Mesh(new THREE.CylinderGeometry(2.2, 2.2, 3.5, 32), new THREE.MeshStandardMaterial({ color: 0x334155, metalness: 0.8, roughness: 0.2 }));
-        canister.position.y = 2.0;
-        chamberGroup.add(canister);
+      } else if (hw === 'chromex') {
+        controls.target.set(0, 2.2, 0);
+        camera.position.set(10, 8, 12);
 
-        const ledCap = new THREE.Mesh(new THREE.CylinderGeometry(2.25, 2.25, 0.4, 32), new THREE.MeshStandardMaterial({ color: 0xf59e0b, emissive: 0xf59e0b, emissiveIntensity: 0.6 }));
-        ledCap.position.y = 3.8;
-        chamberGroup.add(ledCap);
+        const chassis = new THREE.Mesh(new THREE.BoxGeometry(7, 4.5, 4), boxMat);
+        chassis.position.y = 2.25;
+        chamberGroup.add(chassis);
+
+        for (let i = -2.5; i <= 2.5; i += 1.0) {
+          const canister = new THREE.Mesh(new THREE.BoxGeometry(0.8, 3.2, 3.2), new THREE.MeshStandardMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.4 }));
+          canister.position.set(i, 2.0, 0);
+          chamberGroup.add(canister);
+
+          const foam = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.6, 3.0), new THREE.MeshStandardMaterial({ color: 0x8d6e63 }));
+          foam.position.set(i, 0.7, 0);
+          chamberGroup.add(foam);
+        }
       }
+
+      // Reset all particles for new hardware geometry
+      particles.forEach(p => spawnParticle(p, hw));
     }
 
     // --- TELEMETRY & TRANSPIRATION UPDATE LOGIC ---
@@ -329,68 +512,86 @@
       const canopyScale = parseFloat(document.getElementById('canopySlider').value) / 100.0;
       
       const lai = (0.5 + 3.5 * (canopyScale - 0.2) / 0.8).toFixed(1);
-      const stageName = canopyScale < 0.35 ? `Seedling (LAI ${lai})` : (canopyScale < 0.75 ? `Vegetative (LAI ${lai})` : `Full Mature (LAI ${lai})`);
+      const stageName = canopyScale < 0.35 ? `Seedling (LAI ${lai})` : (canopyScale < 0.75 ? `Vegetative (LAI ${lai})` : `Mature (LAI ${lai})`);
       document.getElementById('canopyStageText').innerText = stageName;
 
-      let u = "0.600 m/s", delta = "1.63 mm", gbl = "1.071 mol/m²s", stag = "2.6 %", hyp = "Optimal (>20%)", eth = "<0.05 ppm";
-      let transp = "4.82 mmol/m²s", waterFlux = "585 mL/day";
-      let gblClass = "val-success", stagClass = "val-success", hypClass = "val-success";
+      let inlet = "Dual 0.60 m/s Slots", u = "0.600 m/s", drag = "14.2 mN", tke = "11.9e-3 m²/s²", gbl = "1.071 mol/m²s", transp = "4.82 mmol/m²s", flux = "585 mL/day", cond = "Clear (No Droplets)", hyp = "Optimal (>20%)";
+      let gblClass = "val-success", hypClass = "val-success", condClass = "val-success";
 
       let gbl_num = 1.071;
       let area = 0.1708;
 
       if (flow === 'cutoff') {
-        u = "0.000 m/s";
-        delta = grav === '1g' ? "4.82 mm" : ">25.0 mm";
+        inlet = "Fan Off (0 m³/h)"; u = "0.000 m/s"; drag = "0.0 mN"; tke = "0.0e-3 m²/s²";
         gbl_num = grav === '1g' ? 0.362 : 0.028;
         gbl = `${gbl_num.toFixed(3)} mol/m²s`;
-        stag = grav === '1g' ? "32.4 %" : "100.0 %";
-        hyp = grav === '1g' ? "Warning (15 min)" : "Critical Suffocation (<4 min)";
-        eth = ">2.50 ppm";
-        gblClass = "val-danger"; stagClass = "val-danger"; hypClass = "val-danger";
+        cond = grav === '0g' ? "Extreme Lid Droplets" : "Mild Moisture";
+        hyp = grav === '1g' ? "Buoyant Floor (15 min)" : "Critical Hypoxia (<4 min)";
+        gblClass = "val-danger"; hypClass = "val-danger"; condClass = "val-danger";
+      } else if (hw === 'aph') {
+        inlet = flow === 'high' ? "Dual 1.50 m/s Slots" : (flow === 'low' ? "Dual 0.30 m/s Slots" : "Dual 0.60 m/s Slots");
+        u = flow === 'high' ? "1.500 m/s" : (flow === 'low' ? "0.300 m/s" : "0.600 m/s");
+        const u_num = parseFloat(u);
+        drag = `${(0.5 * 0.2 * parseFloat(lai) * 1.2 * Math.pow(u_num, 2) * area * 1000).toFixed(1)} mN`;
+        tke = `${(0.033 * Math.pow(u_num, 2) * 1000).toFixed(1)}e-3 m²/s²`;
+        gbl_num = flow === 'high' ? 1.745 : (flow === 'low' ? 0.720 : 1.071);
+        gbl = `${gbl_num.toFixed(3)} mol/m²s`;
       } else if (hw === 'veggie') {
         area = 0.1075;
+        inlet = flow === 'high' ? "Suction 85 m³/h (High)" : "Suction 23 m³/h (Low Draft)";
         u = flow === 'high' ? "0.150 m/s" : "0.065 m/s";
-        gbl_num = grav === '0g' ? (flow === 'high' ? 0.515 : 0.219) : 0.551;
-        delta = grav === '0g' ? (flow === 'high' ? "3.40 mm" : "7.95 mm") : "4.82 mm";
+        const u_num = parseFloat(u);
+        drag = `${(0.5 * 0.2 * parseFloat(lai) * 1.2 * Math.pow(u_num, 2) * area * 1000).toFixed(1)} mN`;
+        tke = `${(0.045 * Math.pow(u_num, 2) * 1000).toFixed(1)}e-3 m²/s²`;
+        gbl_num = flow === 'high' ? 0.515 : 0.219;
         gbl = `${gbl_num.toFixed(3)} mol/m²s`;
-        stag = grav === '0g' ? (flow === 'high' ? "15.4 %" : "52.8 %") : "11.2 %";
-        hyp = (flow === 'low' && grav === '0g') ? "High Mold Risk" : "Stable";
-        eth = "0.20 ppm";
-        if (flow === 'low' && grav === '0g') { gblClass = "val-warning"; stagClass = "val-danger"; hypClass = "val-warning"; }
-      } else if (hw === 'chromex') {
-        area = 0.0274;
-        u = "0.005 m/s"; delta = "14.2 mm"; gbl_num = 0.031; gbl = "0.031 mol/m²s"; stag = "100.0 %"; hyp = "Root Hypoxia (ADH 28x)"; eth = "1.80 ppm";
-        gblClass = "val-danger"; stagClass = "val-danger"; hypClass = "val-danger";
-      } else if (hw === 'cara') {
-        area = 0.0400;
-        u = "0.025 m/s (Ambient ISS Drift)"; delta = grav === '0g' ? "8.50 mm" : "4.80 mm"; gbl_num = 0.326; gbl = "0.326 mol/m²s"; stag = "38.2 %"; hyp = "Tape Buffer (14%)"; eth = "0.85 ppm (Toxic)";
-        gblClass = "val-warning"; stagClass = "val-warning"; hypClass = "val-warning";
+        if (flow === 'low' && grav === '0g') { hyp = "Mold & Hypoxia Risk"; gblClass = "val-warning"; hypClass = "val-warning"; }
       } else if (hw === 'bric') {
         area = 0.0170;
-        u = "0.000 m/s (Sealed Canister)"; delta = "20.0 mm"; gbl_num = 0.046; gbl = "0.046 mol/m²s"; stag = "92.0 %"; hyp = "Severe Hypoxia (1.8%)"; eth = "3.80 ppm (Critical)";
-        gblClass = "val-danger"; stagClass = "val-danger"; hypClass = "val-danger";
+        inlet = "Hermetically Sealed PDFU";
+        u = "0.000 m/s (Internal Diffusion)";
+        drag = "0.0 mN"; tke = "1.0e-7 m²/s²";
+        gbl_num = 0.046; gbl = "0.046 mol/m²s";
+        const isLedOn = document.getElementById('bricLedState').value === 'on';
+        if (isLedOn) {
+          cond = "LED ON: Lid +4.8K (Evap RH 98%)";
+          condClass = "val-warning";
+        } else {
+          cond = "LED OFF: Rapid Condensation Beads";
+          condClass = "val-danger";
+        }
+        hyp = "Severe Hypoxia (1.8% O2)";
+        gblClass = "val-danger"; hypClass = "val-danger";
+      } else if (hw === 'cara') {
+        area = 0.0400; inlet = "Passive ISS Wall Drift"; u = "0.025 m/s"; drag = "0.2 mN"; tke = "1.2e-3 m²/s²"; gbl_num = 0.326; gbl = "0.326 mol/m²s";
+        cond = "Condensation after 6.5h"; hyp = "Micropore Seam (14% O2)";
+        gblClass = "val-warning";
+      } else if (hw === 'chromex') {
+        area = 0.0274; inlet = "AES 1.0 L/h Needle Inlets"; u = "0.005 m/s"; drag = "0.05 mN"; tke = "1.0e-5 m²/s²"; gbl_num = 0.031; gbl = "0.031 mol/m²s";
+        cond = "Foam Humidity Matrix"; hyp = "Root Hypoxia (ADH 28x)";
+        gblClass = "val-danger"; hypClass = "val-danger";
       }
 
-      // Dynamic Transpiration calculation (Penman-Monteith / Stomatal Conductance coupling)
-      const gs = 0.25; // Stomatal conductance in mol/m2s
+      // Coupled Transpiration Calculation
+      const gs = 0.25;
       const g_total = (gs * gbl_num) / (gs + gbl_num);
-      const vpd = 1.2; // kPa
-      const patm = 101.3; // kPa
-      const E_transp = (g_total * (vpd / patm) * 1000).toFixed(2); // mmol/m2s
-      const daily_flux_ml = (g_total * (vpd / patm) * area * parseFloat(lai) * 18.015 * 86400 / 1000).toFixed(0);
+      const vpd = 1.2;
+      const patm = 101.3;
+      transp = `${(g_total * (vpd / patm) * 1000).toFixed(2)} mmol/m²s`;
+      flux = `${(g_total * (vpd / patm) * area * parseFloat(lai) * 18.015 * 86400 / 1000).toFixed(0)} mL/day`;
 
+      document.getElementById('telInlet').innerText = inlet;
       document.getElementById('telU').innerText = u;
-      document.getElementById('telDelta').innerText = delta;
+      document.getElementById('telDrag').innerText = drag;
+      document.getElementById('telTke').innerText = tke;
       document.getElementById('telGbl').innerText = gbl;
       document.getElementById('telGbl').className = "telemetry-val " + gblClass;
-      document.getElementById('telTransp').innerText = `${E_transp} mmol/m²s`;
-      document.getElementById('telWaterFlux').innerText = `${daily_flux_ml} mL/day`;
-      document.getElementById('telStag').innerText = stag;
-      document.getElementById('telStag').className = "telemetry-val " + stagClass;
+      document.getElementById('telTransp').innerText = transp;
+      document.getElementById('telWaterFlux').innerText = flux;
+      document.getElementById('telCondens').innerText = cond;
+      document.getElementById('telCondens').className = "telemetry-val " + condClass;
       document.getElementById('telHypoxia').innerText = hyp;
       document.getElementById('telHypoxia').className = "telemetry-val " + hypClass;
-      document.getElementById('telEthylene').innerText = eth;
     }
 
     // --- EVENT LISTENERS ---
@@ -403,6 +604,17 @@
       rebuildGeometry(hw);
       updateTelemetry();
     });
+    document.getElementById('bricLedState').addEventListener('change', () => {
+      const hw = document.getElementById('hardwareSelect').value;
+      rebuildGeometry(hw);
+      updateTelemetry();
+    });
+    document.getElementById('togglePhotoperiodBtn').addEventListener('click', () => {
+      const sel = document.getElementById('bricLedState');
+      sel.value = (sel.value === 'on') ? 'off' : 'on';
+      rebuildGeometry('bric');
+      updateTelemetry();
+    });
     document.getElementById('gravitySelect').addEventListener('change', updateTelemetry);
     document.getElementById('flowSelect').addEventListener('change', updateTelemetry);
     document.getElementById('fanStopBtn').addEventListener('click', () => {
@@ -410,42 +622,145 @@
       updateTelemetry();
     });
 
-    // --- ANIMATION LOOP ---
-    let angle = 0;
+    // --- HIGH-FIDELITY PARTICLE ANIMATION LOOP ---
     function animate() {
       requestAnimationFrame(animate);
-      angle += 0.004;
-      chamberGroup.rotation.y = angle;
+      controls.update();
 
-      const hw = document.getElementById('hardwareSelect').value;
+      const hw = currentHardware;
       const flow = document.getElementById('flowSelect').value;
-      
+      const canopyScale = parseFloat(document.getElementById('canopySlider').value) / 100.0;
+      const canopyH = 3.2 * canopyScale;
+      const lai = 0.5 + 3.5 * (canopyScale - 0.2) / 0.8;
+
       let speedMult = 1.0;
-      if (hw === 'bric') {
-        speedMult = 0.02; // sealed canister - no air motion
-      } else if (hw === 'cara') {
-        speedMult = 0.15; // passive ambient ISS cabin drift
-      } else if (flow === 'cutoff') {
-        speedMult = 0.03;
-      } else if (flow === 'high') {
-        speedMult = 2.4;
-      } else if (flow === 'low') {
-        speedMult = 0.4;
-      }
+      if (flow === 'cutoff') speedMult = 0.04;
+      else if (flow === 'high') speedMult = 2.2;
+      else if (flow === 'low') speedMult = 0.45;
 
-      const positions = particleGeo.attributes.position.array;
-      for (let i = 0; i < particleCount; i++) {
-        positions[i * 3 + 1] += particleVelocities[i].vy * speedMult;
-        positions[i * 3] += particleVelocities[i].vx * speedMult;
-        positions[i * 3 + 2] += particleVelocities[i].vz * speedMult;
+      const pos = particleGeo.attributes.position.array;
+      const cols = particleGeo.attributes.color.array;
 
-        if (positions[i * 3 + 1] > 5.8) {
-          positions[i * 3 + 1] = 0.2;
-          positions[i * 3] = (Math.random() - 0.5) * 5.5;
-          positions[i * 3 + 2] = (Math.random() - 0.5) * 5.5;
+      for (let i = 0; i < maxParticles; i++) {
+        const p = particles[i];
+        p.life++;
+
+        if (p.life > p.maxLife) {
+          spawnParticle(p, hw);
         }
+
+        if (hw === 'veggie') {
+          // VEGGIE: Particles flow inward from 4 base slots, funnel towards (0, 5.4, 0)
+          // Inside canopy (y: 0.4 to 0.4 + 1.8*canopyScale): canopy drag deceleration & wake jitter
+          const inCanopy = (p.y > 0.4 && p.y < 0.4 + 1.8 * canopyScale && Math.abs(p.x) < 2.2 && Math.abs(p.z) < 2.2);
+          const dragFactor = inCanopy ? (1.0 - 0.15 * lai) : 1.0;
+
+          // Target is the top fan cylinder at (0, 5.4, 0)
+          const dx = 0 - p.x;
+          const dz = 0 - p.z;
+          const distXZ = Math.sqrt(dx*dx + dz*dz) + 0.1;
+
+          p.vx += (dx / distXZ) * 0.004 * speedMult * dragFactor;
+          p.vz += (dz / distXZ) * 0.004 * speedMult * dragFactor;
+          p.vy += 0.003 * speedMult * dragFactor;
+
+          if (inCanopy) {
+            // Add turbulent wake fluctuation
+            p.vx += (Math.random() - 0.5) * 0.008 * lai;
+            p.vz += (Math.random() - 0.5) * 0.008 * lai;
+          }
+
+          p.x += p.vx * speedMult;
+          p.y += p.vy * speedMult;
+          p.z += p.vz * speedMult;
+
+          // Once particle reaches the top fan (y > 5.2 and distXZ < 0.8), shoot UPWARD through fan into cabin!
+          if (p.y >= 5.3 && distXZ < 0.9) {
+            p.vy = 0.12 * speedMult; // Exhaust jet
+            p.vx *= 0.2; p.vz *= 0.2;
+            p.r = 1.0; p.g = 0.2; p.b = 0.4; // Highlight fan exhaust packet
+          }
+
+          if (p.y > 7.0 || p.life > p.maxLife) {
+            spawnParticle(p, hw);
+          }
+
+        } else if (hw === 'aph') {
+          // APH: Lateral inports (x = -2.9 and x = +2.9, y = 0.95)
+          // Sweep across SC, collide along x = 0, shoot vertically through canopy to ceiling exhaust
+          const inCanopy = (p.y > 0.8 && p.y < 0.8 + canopyH && Math.abs(p.x) < 2.6 && Math.abs(p.z) < 2.6);
+          const dragFactor = inCanopy ? (1.0 - 0.18 * lai) : 1.0;
+
+          if (p.y < 1.4 && Math.abs(p.x) > 0.3) {
+            // Horizontal cross-flow across Science Carrier
+            p.vx += (p.x > 0 ? -1 : 1) * 0.003 * speedMult;
+            p.vy += 0.0005 * speedMult;
+          } else {
+            // Collision zone at midline converts horizontal to vertical momentum
+            p.vx *= 0.85;
+            p.vy += 0.005 * speedMult * dragFactor;
+            
+            if (inCanopy) {
+              // Turbulent boundary layer stripping jitter
+              p.vx += (Math.random() - 0.5) * 0.006 * lai;
+              p.vz += (Math.random() - 0.5) * 0.006 * lai;
+            }
+          }
+
+          p.x += p.vx * speedMult;
+          p.y += p.vy * speedMult;
+          p.z += p.vz * speedMult;
+
+          // Exhaust through 4 ceiling perimeter strips (y > 5.7 and |x|>2.5 or |z|>2.5)
+          if (p.y >= 5.8) {
+            p.r = 0.9; p.g = 0.2; p.b = 0.2; // Red exhaust
+          }
+
+          if (p.y > 6.4 || p.life > p.maxLife) {
+            spawnParticle(p, hw);
+          }
+
+        } else if (hw === 'bric') {
+          // BRIC: Diffusion/convection inside sealed PDFU dish
+          const isLedOn = document.getElementById('bricLedState').value === 'on';
+          if (isLedOn) {
+            // Thermal conduction in 0g (pure Brownian vibration)
+            p.x += (Math.random() - 0.5) * 0.008;
+            p.y += (Math.random() - 0.5) * 0.008;
+            p.z += (Math.random() - 0.5) * 0.008;
+          } else {
+            // Cold lid cooling state
+            p.x += (Math.random() - 0.5) * 0.005;
+            p.y += (Math.random() - 0.5) * 0.005;
+            p.z += (Math.random() - 0.5) * 0.005;
+          }
+
+          // Confine within cylinder bounds
+          const rSq = p.x*p.x + p.z*p.z;
+          if (rSq > 3.6) {
+            p.x *= 0.92; p.z *= 0.92;
+          }
+          if (p.y < 0.8) p.y = 0.85;
+          if (p.y > 2.9) p.y = 2.85;
+
+        } else {
+          // Generic drift for CARA / CHROMEX
+          p.x += p.vx * speedMult;
+          p.y += p.vy * speedMult;
+          p.z += p.vz * speedMult;
+          if (p.life > p.maxLife) spawnParticle(p, hw);
+        }
+
+        pos[i*3] = p.x;
+        pos[i*3+1] = p.y;
+        pos[i*3+2] = p.z;
+        cols[i*3] = p.r;
+        cols[i*3+1] = p.g;
+        cols[i*3+2] = p.b;
       }
+
       particleGeo.attributes.position.needsUpdate = true;
+      particleGeo.attributes.color.needsUpdate = true;
 
       renderer.render(scene, camera);
     }
