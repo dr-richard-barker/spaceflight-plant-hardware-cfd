@@ -14,8 +14,8 @@ plt.rcParams['xtick.labelsize'] = 7
 plt.rcParams['ytick.labelsize'] = 7
 plt.rcParams['legend.fontsize'] = 5.8
 
-fig, axs = plt.subplots(3, 2, figsize=(7.2, 7.6), dpi=300)
-plt.subplots_adjust(hspace=0.48, wspace=0.35)
+fig, axs = plt.subplots(3, 2, figsize=(7.4, 7.8), dpi=300)
+plt.subplots_adjust(hspace=0.54, wspace=0.42)
 
 carriers = ['CARA\n(+L, 1g)', 'CARA\n(+L, 0g)', 'CARA\n(-D, 0g)', 'BRIC-LED\n(+L, 0g)', 'BRIC\n(-D, 0g)']
 x = np.arange(5)
@@ -28,8 +28,8 @@ c_d = ['#7570b3', '#7570b3', '#9e9ac8', '#e7298a', '#c51b7d']
 bars_a = ax.bar(x, delta, color=c_d, edgecolor='#333333', linewidth=0.6, width=0.55)
 ax.set_xticks(x)
 ax.set_xticklabels(carriers, rotation=15, ha='right', fontsize=6.2)
-ax.set_ylabel('Thickness $\delta_{ext}$ (mm)')
-ax.set_ylim(0, 30)
+ax.set_ylabel('Thickness $\delta_{ext}$ (mm)', labelpad=6)
+ax.set_ylim(0, 32)
 ax.grid(axis='y', linestyle=':', alpha=0.6)
 for b, val in zip(bars_a, delta):
     ax.text(b.get_x() + b.get_width()/2, val + 0.8, f'{val:.1f}', ha='center', va='bottom', fontsize=5.8, fontweight='bold')
@@ -44,10 +44,10 @@ ax.bar(x, r_ext, width=0.55, label='External $r_{ext}$', color='#abd9e9')
 ax.bar(x, r_tape, width=0.55, bottom=r_ext, label='Tape/Wall $r_{tape}$', color='#fdae61')
 ax.bar(x, r_int, width=0.55, bottom=r_ext+r_tape, label='Headspace $r_{int}$', color='#2c7bb6')
 ax.set_yscale('log')
-ax.set_ylim(1e2, 3e5)
+ax.set_ylim(50, 4e5)
 ax.set_xticks(x)
 ax.set_xticklabels(carriers, rotation=15, ha='right', fontsize=6.2)
-ax.set_ylabel('Resistance (s/m, log)')
+ax.set_ylabel('Resistance (s/m, log)', labelpad=6)
 ax.legend(loc='upper left', framealpha=0.9)
 ax.grid(axis='y', linestyle=':', alpha=0.6)
 
@@ -60,8 +60,8 @@ bars_c = ax.bar(x, o2, color=c_o2, edgecolor='#333333', linewidth=0.6, width=0.5
 ax.axhline(5.0, color='#c70039', linestyle='--', label='Hypoxia (5%)')
 ax.set_xticks(x)
 ax.set_xticklabels(carriers, rotation=15, ha='right', fontsize=6.2)
-ax.set_ylabel('Headspace $O_2$ (%)')
-ax.set_ylim(0, 24)
+ax.set_ylabel('Headspace $O_2$ (%)', labelpad=6)
+ax.set_ylim(0, 25)
 ax.grid(axis='y', linestyle=':', alpha=0.6)
 ax.legend(loc='upper right', framealpha=0.9)
 for b, val in zip(bars_c, o2):
@@ -76,12 +76,12 @@ bars_d = ax.bar(x, eth, color=c_eth, edgecolor='#333333', linewidth=0.6, width=0
 ax.axhline(0.50, color='#c70039', linestyle='--', label='Epinasty (0.5 ppm)')
 ax.set_xticks(x)
 ax.set_xticklabels(carriers, rotation=15, ha='right', fontsize=6.2)
-ax.set_ylabel('Ethylene $C_2H_4$ (ppm)')
-ax.set_ylim(0, 5.5)
+ax.set_ylabel('Ethylene $C_2H_4$ (ppm)', labelpad=6)
+ax.set_ylim(0, 5.8)
 ax.grid(axis='y', linestyle=':', alpha=0.6)
 ax.legend(loc='upper left', framealpha=0.9)
 for b, val in zip(bars_d, eth):
-    y_pos = val + 0.15 if val > 0.4 else val + 0.25
+    y_pos = val + 0.15 if val > 0.4 else val + 0.28
     ax.text(b.get_x() + b.get_width()/2, y_pos, f'{val:.2f}', ha='center', va='bottom', fontsize=5.8, fontweight='bold')
 
 # Panel e: Hours to 98% RH Droplet Condensation
@@ -92,8 +92,8 @@ c_cond = ['#1a9850', '#d73027', '#fee08b', '#d73027', '#d73027']
 bars_e = ax.bar(x, cond, color=c_cond, edgecolor='#333333', linewidth=0.6, width=0.55)
 ax.set_xticks(x)
 ax.set_xticklabels(carriers, rotation=15, ha='right', fontsize=6.2)
-ax.set_ylabel('Hours to Condensation (h)')
-ax.set_ylim(0, 22)
+ax.set_ylabel('Hours to Condensation (h)', labelpad=6)
+ax.set_ylim(0, 24)
 ax.grid(axis='y', linestyle=':', alpha=0.6)
 for b, val in zip(bars_e, cond):
     ax.text(b.get_x() + b.get_width()/2, val + 0.6, f'{val:.1f}h', ha='center', va='bottom', fontsize=5.8, fontweight='bold')
@@ -110,7 +110,7 @@ ax.bar(xx - w/2, scores_cara_light, width=w, color='#7570b3', label='CARA (+Ligh
 ax.bar(xx + w/2, scores_bric_led, width=w, color='#e7298a', label='BRIC-LED (+Light)')
 ax.set_xticks(xx)
 ax.set_xticklabels(categories, rotation=15, ha='right', fontsize=5.8)
-ax.set_ylabel('Rating (1-5)')
+ax.set_ylabel('Rating (1-5)', labelpad=6)
 ax.set_ylim(0, 6)
 ax.grid(axis='y', linestyle=':', alpha=0.6)
 ax.legend(loc='upper right', framealpha=0.9)
@@ -119,4 +119,4 @@ out_dir = Path(__file__).resolve().parent / 'output'
 plt.savefig(out_dir / 'Fig10_cara_bric_dishes.pdf', bbox_inches='tight')
 plt.savefig(out_dir / 'Fig10_cara_bric_dishes.png', bbox_inches='tight', dpi=300)
 plt.close()
-print("Fig10 regenerated clean.")
+print("Fig10 regenerated with clean layout.")
