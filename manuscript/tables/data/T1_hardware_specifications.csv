@@ -1,0 +1,15 @@
+Parameter,NASA VEGGIE (VPS),NASA Advanced Plant Habitat (APH),NASA Space Shuttle CHROMEX (PGU/PGC),CARA Experiment (Square Dishes),NASA BRIC / BRIC-LED (Round Dishes)
+Payload Classification,Deployable Space Crop Garden,Closed-Loop Research Phytotron,Shuttle Middeck Locker Replacement,ISS Wall / Veggie Petri Insert,Autonomous Canister (PDFU)
+Enclosure Structure,Collapsible transparent FEP bellows,Rigid carbon-fiber composite shell,Middeck chassis with 6 Lexan PGCs,Square acrylic dishes (micropore tape),Aluminum canister with 6 PDFUs
+Growth Area (m2),0.1075 m² (292 × 368 mm),0.1708 m² (454 × 408 mm),0.0274 m² (6× 95 × 48 mm),0.0100 m² (100 × 100 mm per dish),0.0170 m² (6× Ø60 mm dishes)
+Canopy Air Volume (L),37.61 L (nominal 350 mm height),83.36 L (shoot zone),4.10 L total (0.684 L / PGC),0.20 L gross (0.16 L headspace),0.254 L total (0.035 L / PDFU)
+Total Enclosure Volume (L),40.60 L (including pillows),92.80 L (shoot + root zone),49.57 L (PGU chassis gross),0.20 L per dish,0.95 L gross canister
+Growth Height (mm),350.0 mm (adjustable 0-450 mm),450.0 mm (clear shoot zone),190.0 mm (canister height),20.0 mm (dish total),15.0 mm (PDFU dish depth)
+Primary Flow Driver,1x Top Centrifugal Suction Fan (Ø50 mm),2x Symmetric ECS Supply Blowers,PGU Chassis Fan + PGC Needle AES,Ambient habitat draft / Boundary layer,Passive sealed canister / Micro-convection
+Airflow Topology,Bottom-up forced suction wash,Opposing lateral cross-flow updraft,Creeping percolation / Darcy flow,External boundary layer sweep,Internal diffusion / Creeping buoyant plume
+Nominal Flow Rate,85.0 m³/h (23.61 L/s),26.4 m³/h (7.34 L/s),0.001 m³/h (1.0 L/h AES),Habitat coupled,0.000 m³/h (Sealed)
+Canopy Forced Velocity,0.150 m/s (draft velocity),0.300 - 1.500 m/s (regulated),0.001 - 0.010 m/s (creeping),0.010 - 0.150 m/s (habitat flow),< 0.005 m/s (creeping)
+Air Exchange Rate (ACH),2260 h⁻¹ (tau = 1.60 s),317 h⁻¹ (tau = 11.35 s),1.16 h⁻¹ (AES tau = 51.9 min),Passive seam flux,0.00 h⁻¹ (Sealed)
+Lighting Configuration,Overhead RGB LED cap (200-450 umol/m2/s),5-Channel GLA LED (0-1000 umol/m2/s),Fluorescent lamp bank with heat pipe,Ambient ISS / VEGGIE LED (+Light vs -Dark),Integrated PDFU LED cap (BRIC-LED vs BRIC)
+Thermal Boundary Condition,Sensible heat rejection to cabin,Liquid coldplate to ISS MTL loop,PGU forced-air cooling duct,Convective boundary layer (+/- Light),Canister conduction (+/- Light)
+Cabin Interface Coupling,Open continuous cabin exchange,Closed EXPRESS Rack quad-locker,Shuttle Middeck Locker interface,Semi-sealed (Micropore tape seam),Hermetically sealed canister

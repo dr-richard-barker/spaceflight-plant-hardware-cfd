@@ -1,0 +1,7 @@
+theme: jekyll-theme-cayman
+title: Spaceflight Plant Hardware CFD Framework
+description: 3D OpenFOAM CFD Framework for Spaceflight Plant Hardware under Variable Gravity
+author: Richard Barker, Henry Ewald, Gram Zavos, Manisha Dagar, Mia Schecter, Adriana Sanchez, Marshall Porterfield, Astrobotany Consortium
+github:
+  is_project_page: true
+  repository_url: https://github.com/dr-richard-barker/spaceflight-plant-hardware-cfd

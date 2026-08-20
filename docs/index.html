@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spaceflight Plant Hardware CFD | OpenFOAM Multi-Chamber Framework</title>
+  <style>
+    :root {
+      --primary: #005696;
+      --primary-dark: #003b66;
+      --accent: #c70039;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%); color: white; padding: 3rem 1.5rem; text-align: center; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .badge-nature { background: var(--accent); color: white; }
+    .badge-openfoam { background: #0284c7; color: white; }
+    h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.25; margin-bottom: 1rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
+    .authors { font-size: 1.05rem; margin-bottom: 0.5rem; font-weight: 500; }
+    .affiliation { font-size: 0.9rem; opacity: 0.9; margin-bottom: 1.5rem; }
+    .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+    .btn-primary { background: white; color: var(--primary-dark); }
+    .btn-primary:hover { background: #f1f5f9; transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: white; border: 2px solid white; }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+    .btn-accent { background: var(--accent); color: white; }
+    .btn-accent:hover { background: #a80030; transform: translateY(-2px); }
+    
+    .card { background: var(--card-bg); border-radius: 0.75rem; border: 1px solid var(--border); padding: 1.75rem; margin-bottom: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .card h2 { color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+    
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    
+    .hardware-card { border: 1px solid var(--border); border-radius: 0.5rem; padding: 1.25rem; background: #fafbfc; transition: transform 0.2s; }
+    .hardware-card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
+    .hardware-card h3 { color: var(--primary); font-size: 1.15rem; margin-bottom: 0.5rem; }
+    
+    .figure-box { margin-bottom: 2rem; text-align: center; }
+    .figure-box img { max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid var(--border); }
+    .figure-caption { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.75rem; text-align: left; }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; }
+    th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: #f1f5f9; color: var(--primary); font-weight: 700; }
+    tr:hover { background: #f8fafc; }
+    
+    footer { background: #0f172a; color: #94a3b8; padding: 2.5rem 1.5rem; text-align: center; font-size: 0.85rem; }
+    footer a { color: #38bdf8; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <span class="badge badge-nature">Nature npj Microgravity Article</span>
+      <span class="badge badge-openfoam">OpenFOAM v2606 CFD</span>
+    </div>
+    <h1>Aerodynamic Boundary-Layer Scaling and Enclosure Regimes Across Spaceflight Plant Growth Hardware</h1>
+    <div class="authors">Richard Barker, Henry Ewald, Gram Zavos, Manisha Dagar, Mia Schecter, Adriana Sanchez, Marshall Porterfield, Astrobotany Consortium</div>
+    <div class="affiliation">Department of Agricultural and Biological Engineering, Purdue University, West Lafayette, IN 47907, USA</div>
+    <div class="btn-group">
+      <a href="assets/pdf/npj_manuscript.pdf" class="btn btn-primary" target="_blank">📄 Download Manuscript PDF (11 Pages)</a>
+      <a href="explorer.html" class="btn btn-accent">🚀 Interactive 3D WebGL Explorer</a>
+      <a href="https://github.com/dr-richard-barker/spaceflight-plant-hardware-cfd" class="btn btn-outline" target="_blank">💻 GitHub Repository</a>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- EXECUTIVE SUMMARY CARD -->
+    <div class="card">
+      <h2>Executive Summary & Fluid Mechanics Overview</h2>
+      <p>Plants cultivated in extraterrestrial habitats encounter a physical environment devoid of natural gravity-driven buoyancy ($\text{Gr} \to 0$), expanding unstirred fluid boundary layers around vegetative canopies and drastically elevating aerodynamic resistance ($r_a = 1/g_{bl}$).</p>
+      <p style="margin-top: 0.75rem;">This comprehensive 3D Computational Fluid Dynamics (CFD) investigation compares five distinct spaceflight plant growth systems across four gravitational regimes: <strong>Earth (1.0g)</strong>, <strong>Mars (0.38g)</strong>, <strong>Moon (0.166g)</strong>, and <strong>Microgravity (0g)</strong>.</p>
+    </div>
+
+    <!-- HARDWARE PLATFORMS GRID -->
+    <div class="card">
+      <h2>Evaluated Spaceflight Hardware Platforms</h2>
+      <div class="grid-3">
+        <div class="hardware-card">
+          <h3>1. NASA VEGGIE (VPS)</h3>
+          <p><strong>Volume:</strong> 37.61 L Shoot Zone</p>
+          <p><strong>Topology:</strong> Top Suction Fan ($\varnothing 50\text{ mm}$), 4 Base Intake Slots</p>
+          <p><strong>Key Finding:</strong> 52.8% canopy stagnation under low fan in 0g; 100% spore export to cabin.</p>
+        </div>
+        <div class="hardware-card">
+          <h3>2. NASA Advanced Plant Habitat (APH)</h3>
+          <p><strong>Volume:</strong> 83.36 L Shoot / 9.44 L SC</p>
+          <p><strong>Topology:</strong> Dual Opposing Lateral Cross-Jets ($0.60\text{ m/s}$)</p>
+          <p><strong>Key Finding:</strong> Invariant $g_{bl} \approx 1.07\text{ mol m}^{-2}\text{s}^{-1}$, 45% displacement ventilation, 0% cabin export (HEPA).</p>
+        </div>
+        <div class="hardware-card">
+          <h3>3. NASA CHROMEX / PGU</h3>
+          <p><strong>Volume:</strong> 49.57 L Chassis / 0.866 L PGC</p>
+          <p><strong>Topology:</strong> Creeping Flow ($\text{Re} = 123$), Brinkman-Darcy Root Foam</p>
+          <p><strong>Key Finding:</strong> Root hypoxia ($\text{O}_2 < 5\%$) within 35 min explains flight *ADH* upregulation ($14.2\times$–$28.5\times$).</p>
+        </div>
+        <div class="hardware-card">
+          <h3>4. CARA Square Dishes ($\pm$ Light)</h3>
+          <p><strong>Volume:</strong> $100 \times 100 \times 20\text{ mm}$ ($0.200\text{ L}$)</p>
+          <p><strong>Topology:</strong> Micropore Tape Seam ($r_{\text{tape}} = 650\text{ s/m}$)</p>
+          <p><strong>Key Finding:</strong> Microgravity boundary layer thickening causes ethylene accumulation ($0.85\text{ ppm}$) and lid condensation (6.5 h).</p>
+        </div>
+        <div class="hardware-card">
+          <h3>5. BRIC / BRIC-LED Round Dishes ($\pm$ Light)</h3>
+          <p><strong>Volume:</strong> $\varnothing 60 \times 15\text{ mm}$ in PDFU Canisters</p>
+          <p><strong>Topology:</strong> Hermetically Sealed / LED Cap</p>
+          <p><strong>Key Finding:</strong> Complete diffusion limitation ($r_{\text{tot}} > 101\text{k s/m}$), extreme hypoxia ($\text{O}_2 < 1.8\%$), ethylene $>3.8\text{ ppm}$.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PUBLICATION FIGURES -->
+    <div class="card">
+      <h2>Publication Figures & Aerodynamic Analysis</h2>
+      
+      <div class="figure-box">
+        <img src="assets/figures/Fig1_hardware_domains.png" alt="Figure 1">
+        <div class="figure-caption"><strong>Figure 1 |</strong> 3D spaceflight hardware domain architectures, mesh layout, and operational flow paths across VEGGIE, APH, CHROMEX, CARA square dishes, and BRIC-LED round dishes.</div>
+      </div>
+
+      <div class="figure-box">
+        <img src="assets/figures/Fig2_gravity_richardson.png" alt="Figure 2">
+        <div class="figure-caption"><strong>Figure 2 |</strong> Dimensionless Richardson number ($\text{Ri} = \text{Gr}/\text{Re}^2$) scaling and convective regime trajectories across Earth, Mars, Moon, and Microgravity.</div>
+      </div>
+
+      <div class="figure-box">
+        <img src="assets/figures/Fig3_canopy_aerodynamics.png" alt="Figure 3">
+        <div class="figure-caption"><strong>Figure 3 |</strong> Canopy aerodynamics, vertical velocity profiles $u(z)$, boundary-layer conductance ($g_{bl}$), and stagnant volume fractions.</div>
+      </div>
+
+      <div class="figure-box">
+        <img src="assets/figures/Fig4_scalar_ventilation.png" alt="Figure 4">
+        <div class="figure-caption"><strong>Figure 4 |</strong> Scalar ventilation dynamics, Local Mean Age of Air ($\text{LMA}$), and transient canopy flushing decay curves.</div>
+      </div>
+
+      <div class="figure-box">
+        <img src="assets/figures/Fig5_biosecurity_trades.png" alt="Figure 5">
+        <div class="figure-caption"><strong>Figure 5 |</strong> Spaceflight biosecurity, pathogen containment, and bioaerosol dispersion trade space.</div>
+      </div>
+
+      <div class="figure-box">
+        <img src="assets/figures/Fig6_3d_flow_topologies.png" alt="Figure 6">
+        <div class="figure-caption"><strong>Figure 6 |</strong> 3D spatial flow topologies, streamline ribbons, and canopy wall shear stress probability distributions.</div>
+      </div>
+
+      <div class="figure-box">
+        <img src="assets/figures/Fig7_airflow_extremes.png" alt="Figure 7">
+        <div class="figure-caption"><strong>Figure 7 |</strong> Operational airflow extremes matrix: stagnation vs low draft vs nominal vs high blast.</div>
+      </div>
+
+      <div class="figure-box">
+        <img src="assets/figures/Fig8_chromex_multiscale_hypoxia.png" alt="Figure 8">
+        <div class="figure-caption"><strong>Figure 8 |</strong> NASA Space Shuttle CHROMEX / PGU multi-scale thermal-fluid dynamics, PGC creeping flow, and hypoxia linkage to flight *ADH* transcriptomics.</div>
+      </div>
+
+      <div class="figure-box">
+        <img src="assets/figures/Fig9_fan_failure_dynamics.png" alt="Figure 9">
+        <div class="figure-caption"><strong>Figure 9 |</strong> Transient aerodynamics of fan failure, boundary-layer collapse, and physiological starvation across gravities.</div>
+      </div>
+
+      <div class="figure-box">
+        <img src="assets/figures/Fig10_cara_bric_dishes.png" alt="Figure 10">
+        <div class="figure-caption"><strong>Figure 10 |</strong> Petri dish science sample carrier microenvironments: CARA square dishes ($\pm$ Light) vs BRIC / BRIC-LED round dishes ($\pm$ Light) across spaceflight hardware.</div>
+      </div>
+
+    </div>
+
+    <!-- SCIENTIFIC DATA TABLES -->
+    <div class="card">
+      <h2>Quantitative Benchmark Tables</h2>
+      <h3>Table 1 | Physical, Aerodynamic, and Environmental Control Specifications</h3>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>NASA VEGGIE (VPS)</th>
+              <th>NASA Advanced Plant Habitat</th>
+              <th>NASA CHROMEX (PGU/PGC)</th>
+              <th>CARA / BRIC Dishes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Payload Class</td><td>Deployable Space Garden</td><td>Closed Phytotron</td><td>Shuttle Middeck Locker</td><td>Standard Science Carriers</td></tr>
+            <tr><td>Growth Area ($A$)</td><td>0.1075 m² (292 × 368 mm)</td><td>0.1708 m² (454 × 408 mm)</td><td>0.0274 m² (6 × 95 × 48 mm)</td><td>0.0100 – 0.0170 m²</td></tr>
+            <tr><td>Canopy Volume</td><td>37.61 L</td><td>83.36 L</td><td>4.10 L total (0.684 L / PGC)</td><td>0.042 – 0.200 L</td></tr>
+            <tr><td>Primary Flow Driver</td><td>1x Top Suction (Ø50 mm)</td><td>2x Symmetric Blowers</td><td>PGU Fan + PGC Needle AES</td><td>Ambient Draft / Diffusion</td></tr>
+            <tr><td>Nominal Flow ($Q$)</td><td>85.0 m³/h (23.61 L/s)</td><td>26.4 m³/h (7.34 L/s)</td><td>0.001 m³/h (1.0 L/h AES)</td><td>Passive Seam Flux</td></tr>
+            <tr><td>Canopy Conductance ($g_{bl}$)</td><td>0.219 – 0.515 mol m⁻²s⁻¹</td><td>1.071 – 1.745 mol m⁻²s⁻¹</td><td>0.031 – 0.097 mol m⁻²s⁻¹</td><td>0.046 – 0.326 mol m⁻²s⁻¹</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Astrobotany Consortium & Purdue University Department of Agricultural and Biological Engineering.</p>
+    <p>Open-source scientific simulation code hosted on <a href="https://github.com/dr-richard-barker/spaceflight-plant-hardware-cfd" target="_blank">GitHub</a>.</p>
+  </footer>
+
+</body>
+</html>

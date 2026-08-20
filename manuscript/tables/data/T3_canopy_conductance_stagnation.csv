@@ -1,0 +1,14 @@
+Hardware,Gravity,Operating Mode,U_canopy (m/s),TKE (m2/s2),delta_bl (mm),Sh_CO2,g_bl (mol m-2 s-1),Stagnant Vol Fraction (%)
+VEGGIE,1.0 g,Low Fan,0.065,1.12e-3,4.82,14.2,0.362,32.4%
+VEGGIE,1.0 g,High Fan,0.150,3.45e-3,3.18,21.6,0.551,11.2%
+VEGGIE,0.0 g,Low Fan,0.065,0.68e-3,7.95,8.6,0.219 (Bottleneck),52.8% (Severe Risk)
+VEGGIE,0.0 g,High Fan,0.150,3.02e-3,3.40,20.2,0.515,15.4%
+APH,1.0 g,Nominal (0.6 m/s),0.600,1.24e-2,1.58,43.2,1.102,2.1%
+APH,0.0 g,Nominal (0.6 m/s),0.600,1.19e-2,1.63,42.0,1.071,2.6%
+APH,0.0 g,High (1.5 m/s),1.500,3.65e-2,0.98,68.4,1.745,0.4%
+CHROMEX,0.0 g,AES Active (1.0 L/h),0.0098,2.50e-5,12.40,3.8,0.097 (Creeping),68.5%
+CHROMEX,0.0 g,Static Sealed,0.0000,0.00,25.00,1.2,0.031 (Hypoxic),100.0% (Diffusion)
+CARA (+Light),0.0 g,VEGGIE Draft,0.082,1.20e-3,5.40,12.8,0.326,38.2%
+CARA (-Dark),0.0 g,VEGGIE Draft,0.082,0.95e-3,6.80,10.2,0.260,46.5%
+BRIC-LED (+Light),0.0 g,Sealed PDFU,0.0025,1.10e-6,18.50,1.8,0.046 (Critical),92.0%
+BRIC (-Dark),0.0 g,Sealed PDFU,0.0000,0.00,25.00,1.0,0.025 (Hypoxic),100.0%

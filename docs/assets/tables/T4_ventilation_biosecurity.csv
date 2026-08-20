@@ -1,0 +1,11 @@
+Hardware,Operating Mode,Gravity,Air Exchange Efficiency (%),t50 Bioaerosol Clearance (s),Cabin Spore Export (%),Biosecurity Rating
+VEGGIE,Low Fan (Draft),1.0 g,22.5%,35.2 s,100%,Moderate-Low (Direct cabin exhaust)
+VEGGIE,Low Fan (Draft),0.0 g,14.2%,58.6 s,100%,Critical (52.8% stagnation + mold risk)
+VEGGIE,High Fan,0.0 g,26.2%,13.8 s,100%,High Exposure (Active cabin spore dispersion)
+APH,Nominal (0.6 m/s),1.0 g,45.8%,18.4 s,0%,Superior (Closed-loop HEPA filtration)
+APH,Nominal (0.6 m/s),0.0 g,45.0%,19.2 s,0%,Superior (Uniform upward displacement)
+APH,High (1.5 m/s),0.0 g,47.3%,8.1 s,0%,Maximum (Zero cabin bioburden)
+CHROMEX,AES (1.0 L/h),0.0 g,32.3%,> 2500 s,0%,High (Closed Shuttle canister)
+CHROMEX,Static Sealed,0.0 g,0.0%,Infinite,0%,Hermetic (0% export, 100% internal hypoxia)
+CARA (+Light),VEGGIE Draft,0.0 g,18.5%,120.0 s,0%,Contained (Micropore tape blocks spores)
+BRIC-LED,Sealed PDFU,0.0 g,0.0%,Infinite,0%,Maximum (Hermetic dual barrier)

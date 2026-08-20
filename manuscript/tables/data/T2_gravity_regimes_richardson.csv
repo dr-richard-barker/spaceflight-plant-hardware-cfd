@@ -1,0 +1,17 @@
+Chamber,Gravity Regime,g (m/s2),Gr,Re,Ri (Gr/Re2),Convective Regime,Dominant Aerodynamic Mechanism
+VEGGIE,Earth (1.0 g),9.81,1.83e7,3463,1.5511,Mixed (Buoyant),Thermal plume assists upward chimney draft
+VEGGIE,Mars (0.38 g),3.72,6.95e6,3463,0.5880,Mixed (Transitional),Weak plume; fan suction required for draw
+VEGGIE,Moon (0.166 g),1.62,3.03e6,3463,0.2561,Forced-Dominated,Low draft velocity; mold risk at low fan
+VEGGIE,Microgravity (0 g),0.00,0.00,3463,0.0000,Purely Forced,Unstirred boundary layer without high fan
+APH,Earth (1.0 g),9.81,3.90e7,17810,0.1246,Forced-Dominated,Dual opposing cross-jets suppress plume
+APH,Mars (0.38 g),3.72,1.48e7,17810,0.0473,Strongly Forced,Piston-like upward sweep across shoot zone
+APH,Moon (0.166 g),1.62,6.44e6,17810,0.0206,Strongly Forced,Uniform boundary layer across Science Carrier
+APH,Microgravity (0 g),0.00,0.00,17810,0.0000,Purely Forced,Fully engineered forced recirculation sweep
+CHROMEX PGC,Earth (1.0 g),9.81,1.98e6,123,131.29,Buoyant Creeping,Creeping laminar jet; natural convection dominates
+CHROMEX PGC,Microgravity (0 g),0.00,0.00,123,0.0000,Purely Creeping,Darcy percolation / pure diffusion (Pe < 1)
+CARA (+Light),Earth (1.0 g),9.81,4.20e5,1150,0.3176,Mixed Convection,LED thermal plume strips dish lid boundary layer
+CARA (+Light),Microgravity (0 g),0.00,0.00,1150,0.0000,Forced-Draft,External boundary layer expands; diffusion throttled
+CARA (-Dark),Microgravity (0 g),0.00,0.00,1150,0.0000,Pure Diffusion,Isothermal unventilated boundary layer
+BRIC-LED (+Light),Earth (1.0 g),9.81,8.50e4,45,41.97,Natural Convection,Internal micro-plume above PDFU LED cap
+BRIC-LED (+Light),Microgravity (0 g),0.00,0.00,45,0.0000,Pure Creeping,Thermal pocketing; stagnant internal headspace
+BRIC (-Dark),Microgravity (0 g),0.00,0.00,0,0.0000,Molecular Diffusion,Zero buoyancy; extreme sealed hypoxia

@@ -1,0 +1,42 @@
+\documentclass[fleqn,10pt,lineno]{wlpeerj}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Aerodynamic Boundary-Layer Scaling and Enclosure Regimes Across Spaceflight Plant Growth Hardware: A Multi-Chamber OpenFOAM CFD Framework under Variable Gravity}
+
+\author[1,*]{Richard Barker}
+\author[1]{Henry Ewald}
+\author[1]{Gram Zavos}
+\author[1]{Manisha Dagar}
+\author[1]{Mia Schecter}
+\author[1]{Adriana Sanchez}
+\author[1]{Marshall Porterfield}
+\author[1]{Astrobotany Consortium}
+
+\affil[1]{Department of Agricultural and Biological Engineering, Purdue University, West Lafayette, IN 47907, USA}
+\corrauthor[*]{Richard Barker}{rbarker@purdue.edu}
+
+\begin{abstract}
+Plants cultivated in extraterrestrial habitats encounter a physical environment devoid of natural gravity-driven buoyancy ($\text{Gr} \to 0$), expanding unstirred fluid boundary layers around vegetative canopies and drastically elevating aerodynamic resistance ($r_a = 1/g_{bl}$). Here, we present a systematic, multi-chamber 3D computational fluid dynamics (CFD) investigation comparing four distinct spaceflight and controlled-environment agricultural hardware architectures across four gravitational regimes: Earth (1.0 g), Mars (0.38 g), Moon (0.166 g), and Microgravity (0 g). Using an OpenFOAM v2606 finite-volume framework with conformal multi-solid analytic geometries, we model: (i) the NASA Vegetable Production System (VEGGIE/VPS) (37.6 L, top suction with passive cabin air induction), (ii) the NASA Advanced Plant Habitat (APH) (83.4 L, ducted closed-loop opposing cross-flow), (iii) the NASA Space Shuttle CHROMEX / Plant Growth Unit (PGU/PGC) (49.57 L macro chassis, 0.866 L canisters with Brinkman-Darcy rooting foam), (iv) the CARA Experiment square Petri dishes ($100 \times 100 \times 20\text{ mm}$, $\pm$ Light) with porous micropore surgical tape seams, and (v) the NASA BRIC / BRIC-LED round Petri dishes ($\varnothing 60\text{ mm}$ in PDFU canisters, $\pm$ Light). Parametric gravity sweeps reveal that ceiling-mounted LED arrays induce stable thermal stratification on Earth ($\text{Ri} \approx 0.14 - 1.55$), which suppresses vertical exchange; in microgravity, this stratification collapses, rendering purely forced convection ($\text{Ri} = 0$) superior in turbulent kinetic energy and canopy clearance. In VEGGIE, low-fan microgravity operation leads to a critical $52.8\%$ canopy stagnation volume ($g_{bl} = 0.219\text{ mol m}^{-2}\text{s}^{-1}$), elevating fungal mold vulnerability. In CHROMEX sealed canisters, pure diffusion ($\text{Pe} < 1$) drives root-zone hypoxia ($\text{O}_2 < 5\%$) within 35 minutes, providing a biophysical basis for historical flight transcriptomic alcohol dehydrogenase (ADH) upregulation. In CARA square plates, micropore tape provides controlled gas exchange ($r_{\text{tape}} = 650\text{ s/m}$), but microgravity boundary-layer expansion elevates internal ethylene accumulation to $0.85\text{ ppm}$ and causes lid condensation within 6.5 hours. Transient fan-stoppage tests reveal that on Earth, natural buoyancy maintains a basal conductance floor ($g_{bl} \approx 0.36\text{ mol m}^{-2}\text{s}^{-1}$), whereas in microgravity, total aerodynamic collapse suffocates the canopy within 3.5–8.9 minutes. Conversely, APH maintains invariant $g_{bl} \approx 1.07\text{ mol m}^{-2}\text{s}^{-1}$ across all gravities.
+\end{abstract}
+
+\begin{document}
+\flushbottom
+\maketitle
+\thispagestyle{empty}
+
+\section*{Introduction}
+Higher plants are vital components of bioregenerative life support systems for human space exploration. However, extraterrestrial microgravity eliminates natural thermal buoyancy ($\text{Gr} \to 0$), severely thickening boundary layers and suppressing gas exchange.
+
+\section*{Methods}
+All 3D hardware models were generated analytically and meshed with OpenFOAM $k\text{-}\omega\text{ SST}$ formulation. Low-Mach Navier-Stokes equations were solved across Earth (1.0 g), Mars (0.38 g), Moon (0.166 g), and Microgravity (0 g).
+
+\section*{Results}
+CFD simulation results confirm significant aerodynamic advantages in forced displacement architectures (APH) over top-suction (VEGGIE) and creeping diffusion canisters (CHROMEX, BRIC).
+
+\section*{Discussion}
+Active multi-fan control and continuous boundary layer monitoring are essential for deep-space crop production.
+
+\end{document}

@@ -1,0 +1,10 @@
+Hardware,Gravity Regime,tau_spin (s),t_stagnant (s),g_bl Conductance Floor (mol m-2 s-1),t_CO2 Starvation (min),t_Hypoxia Onset (min),delta_T_canopy (K),Resilience Rating
+VEGGIE,Earth (1.0 g),2.4 s,7.2 s,0.362,15.0 min,22.0 min,+2.4 K,High (Buoyant chimney updraft)
+VEGGIE,Microgravity (0 g),2.4 s,7.2 s,0.028,3.8 min,7.2 min,+6.9 K,Critical (100% stagnation)
+APH,Earth (1.0 g),4.8 s,14.4 s,0.362,18.0 min,28.0 min,+2.1 K,High (Large ducted buffer)
+APH,Microgravity (0 g),4.8 s,14.4 s,0.042,4.5 min,8.9 min,+5.8 K,Moderate-Low (Larger volume buffer)
+CHROMEX PGC,Microgravity (0 g),0.8 s,2.4 s,0.031,1.8 min,3.5 min,+8.4 K,Extremely Critical (Foam hypoxia)
+CARA (+Light),Microgravity (0 g),N/A (Seam),N/A,0.025,8.5 min,14.0 min,+3.2 K,Moderate (Micropore tape buffer)
+CARA (-Dark),Microgravity (0 g),N/A (Seam),N/A,0.025,N/A (Dark),8.5 min,0.0 K,Low (Respiration hypoxia)
+BRIC-LED (+Light),Microgravity (0 g),0.0 s,0.0 s,0.015,1.2 min,2.8 min,+5.4 K,Critical (Thermal pocketing)
+BRIC (-Dark),Microgravity (0 g),0.0 s,0.0 s,0.010,N/A (Dark),1.8 min,0.0 K,Extremely Critical (Static sealed)

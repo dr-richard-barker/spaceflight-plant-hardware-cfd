@@ -1,0 +1,11 @@
+Experiment / Hardware,Petri Dish Geometry,Lighting Mode,Gravity Regime,delta_ext (mm),r_ext (s/m),r_tape/barrier (s/m),r_tot (s/m),Equil O2 (%),Equil C2H4 (ppm),Condensation Onset (h)
+CARA Experiment,Square (100x100 mm),+ Light (ISS/VEGGIE),Earth (1.0 g),4.8,120,650,1220,18.4%,0.32 ppm,18.5 h
+CARA Experiment,Square (100x100 mm),+ Light (ISS/VEGGIE),Moon (0.166 g),6.2,210,650,1310,16.8%,0.52 ppm,12.0 h
+CARA Experiment,Square (100x100 mm),+ Light (ISS/VEGGIE),Microgravity (0 g),8.5,380,650,1480,14.2%,0.85 ppm (Toxic),6.5 h (Severe)
+CARA Experiment,Square (100x100 mm),- Dark (Black Cloth),Earth (1.0 g),5.2,140,650,1240,17.2%,0.45 ppm,22.0 h
+CARA Experiment,Square (100x100 mm),- Dark (Black Cloth),Microgravity (0 g),9.8,420,650,1520,12.5%,1.10 ppm (Epinasty),14.0 h
+BRIC-LED,Round PDFU (Ø60 mm),+ Light (LED Cap),Earth (1.0 g),3.5,85,> 100k,> 100k,4.5%,1.80 ppm,4.2 h
+BRIC-LED,Round PDFU (Ø60 mm),+ Light (LED Cap),Microgravity (0 g),> 20.0,> 1500,> 100k,> 101k,< 2.0% (Hypoxic),> 3.80 ppm,1.5 h (Acute)
+BRIC Hardware,Round PDFU (Ø60 mm),- Dark (Canister),Earth (1.0 g),> 25.0,> 2000,> 100k,> 102k,3.2%,2.10 ppm,8.0 h
+BRIC Hardware,Round PDFU (Ø60 mm),- Dark (Canister),Microgravity (0 g),> 25.0,> 2000,> 100k,> 102k,< 1.5% (Severe Hypoxia),> 4.50 ppm,2.8 h
+APH Science Carrier,Round (Ø90 mm),+ Light (GLA),Microgravity (0 g),2.4,50,920,1290,17.8%,0.28 ppm,38.0 h
