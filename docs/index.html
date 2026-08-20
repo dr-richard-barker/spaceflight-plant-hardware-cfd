@@ -22,6 +22,7 @@
     .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.75rem; }
     .badge-nature { background: var(--accent); color: white; }
     .badge-openfoam { background: #0284c7; color: white; }
+    .badge-4d { background: #10b981; color: white; }
     h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.25; margin-bottom: 1rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
     .authors { font-size: 1.05rem; margin-bottom: 0.5rem; font-weight: 500; }
     .affiliation { font-size: 0.9rem; opacity: 0.9; margin-bottom: 1.5rem; }
@@ -37,7 +38,7 @@
     .card { background: var(--card-bg); border-radius: 0.75rem; border: 1px solid var(--border); padding: 1.75rem; margin-bottom: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
     .card h2 { color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
     
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
     
     .hardware-card { border: 1px solid var(--border); border-radius: 0.5rem; padding: 1.25rem; background: #fafbfc; transition: transform 0.2s; }
@@ -63,6 +64,7 @@
     <div>
       <span class="badge badge-nature">Nature npj Microgravity Article</span>
       <span class="badge badge-openfoam">OpenFOAM v2606 CFD</span>
+      <span class="badge badge-4d">4D Time-Resolved Suite</span>
     </div>
     <h1>Aerodynamic Boundary-Layer Scaling and Enclosure Regimes Across Spaceflight Plant Growth Hardware</h1>
     <div class="authors">Richard Barker, Henry Ewald, Gram Zavos, Manisha Dagar, Mia Schecter, Adriana Sanchez, Marshall Porterfield, Astrobotany Consortium</div>
@@ -81,6 +83,34 @@
       <h2>Executive Summary & Fluid Mechanics Overview</h2>
       <p>Plants cultivated in extraterrestrial habitats encounter a physical environment devoid of natural gravity-driven buoyancy ($\text{Gr} \to 0$), expanding unstirred fluid boundary layers around vegetative canopies and drastically elevating aerodynamic resistance ($r_a = 1/g_{bl}$).</p>
       <p style="margin-top: 0.75rem;">This comprehensive 3D Computational Fluid Dynamics (CFD) investigation compares five distinct spaceflight plant growth systems across four gravitational regimes: <strong>Earth (1.0g)</strong>, <strong>Mars (0.38g)</strong>, <strong>Moon (0.166g)</strong>, and <strong>Microgravity (0g)</strong>.</p>
+    </div>
+
+    <!-- 4D TIME-RESOLVED ANIMATED FIGURES SECTION -->
+    <div class="card">
+      <h2>4D Animated Time-Resolved Fluid Dynamics & Transport Suite</h2>
+      <p style="margin-bottom: 1.5rem; color: var(--text-muted);">High-framerate time-dependent animations capturing aerodynamic spin-down, bioaerosol spore dispersion, headspace gas exchange, and canopy turbulence collision.</p>
+      
+      <div class="grid-2">
+        <div class="figure-box">
+          <img src="assets/animations/anim1_fan_cutoff_decay.gif" alt="Animation 1: Fan Cutoff Decay">
+          <div class="figure-caption"><strong>Animation 1 | Transient Fan Spin-Down & Conductance Collapse across Gravities.</strong> Time evolution of canopy velocity decay $U(t)$ and boundary layer conductance collapse $g_{bl}(t)$ comparing Earth (1g buoyancy floor) against Lunar, Martian, and 0g microgravity regimes.</div>
+        </div>
+
+        <div class="figure-box">
+          <img src="assets/animations/anim2_spore_clearance.gif" alt="Animation 2: Spore Clearance">
+          <div class="figure-caption"><strong>Animation 2 | Fungal Spore Bioaerosol Clearance Kinetics & Cabin Export.</strong> Tracking 3 µm *Fusarium oxysporum* spore clearance: VEGGIE open suction exports 100% of spores into crew quarters, whereas APH achieves closed-loop HEPA containment (0% cabin discharge).</div>
+        </div>
+
+        <div class="figure-box">
+          <img src="assets/animations/anim3_petridish_gas_condensation.gif" alt="Animation 3: Petri Dish Kinetics">
+          <div class="figure-caption"><strong>Animation 3 | Petri Dish Headspace Gas Dynamics & Moisture Condensation.</strong> 24-hour time series of headspace $\text{O}_2$ drawdown and ethylene ($\text{C}_2\text{H}_4$) accumulation comparing CARA square plates ($\pm$ Light, micropore tape) vs sealed BRIC/BRIC-LED round dishes.</div>
+        </div>
+
+        <div class="figure-box">
+          <img src="assets/animations/anim4_canopy_turbulence_wave.gif" alt="Animation 4: Canopy Turbulence Wave">
+          <div class="figure-caption"><strong>Animation 4 | APH Opposing Cross-Jets Collision & Canopy Updraft Wave.</strong> Cross-flow momentum collision along the sagittal midline ($x=227\text{ mm}$), generating turbulent boundary layer stripping without inducing mechanical damage.</div>
+        </div>
+      </div>
     </div>
 
     <!-- HARDWARE PLATFORMS GRID -->
@@ -108,13 +138,13 @@
         <div class="hardware-card">
           <h3>4. CARA Square Dishes ($\pm$ Light)</h3>
           <p><strong>Volume:</strong> $100 \times 100 \times 20\text{ mm}$ ($0.200\text{ L}$)</p>
-          <p><strong>Topology:</strong> Micropore Tape Seam ($r_{\text{tape}} = 650\text{ s/m}$)</p>
+          <p><strong>Mounting:</strong> Attached to ISS Cabin Rack Wall</p>
           <p><strong>Key Finding:</strong> Microgravity boundary layer thickening causes ethylene accumulation ($0.85\text{ ppm}$) and lid condensation (6.5 h).</p>
         </div>
         <div class="hardware-card">
           <h3>5. BRIC / BRIC-LED Round Dishes ($\pm$ Light)</h3>
           <p><strong>Volume:</strong> $\varnothing 60 \times 15\text{ mm}$ in PDFU Canisters</p>
-          <p><strong>Topology:</strong> Hermetically Sealed / LED Cap</p>
+          <p><strong>Enclosure:</strong> Hermetically Sealed (Zero External Flow)</p>
           <p><strong>Key Finding:</strong> Complete diffusion limitation ($r_{\text{tot}} > 101\text{k s/m}$), extreme hypoxia ($\text{O}_2 < 1.8\%$), ethylene $>3.8\text{ ppm}$.</p>
         </div>
       </div>

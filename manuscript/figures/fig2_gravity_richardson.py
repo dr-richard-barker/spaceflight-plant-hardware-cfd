@@ -12,30 +12,22 @@ plt.rcParams['axes.labelsize'] = 8
 plt.rcParams['axes.titlesize'] = 8.5
 plt.rcParams['xtick.labelsize'] = 7
 plt.rcParams['ytick.labelsize'] = 7
-plt.rcParams['legend.fontsize'] = 6.5
+plt.rcParams['legend.fontsize'] = 6.2
 
-fig, axs = plt.subplots(2, 2, figsize=(7.2, 5.8), dpi=300)
-plt.subplots_adjust(hspace=0.35, wspace=0.3)
+fig, axs = plt.subplots(2, 2, figsize=(7.2, 6.0), dpi=300)
+plt.subplots_adjust(hspace=0.42, wspace=0.32)
 
 g_vals = np.linspace(0, 9.81, 100)
 
 # Grashof & Reynolds
-# VEGGIE
 Gr_veg = 1.83e7 * (g_vals / 9.81)
 Re_veg = 3463
 Ri_veg = Gr_veg / (Re_veg**2)
 
-# APH
 Gr_aph = 3.90e7 * (g_vals / 9.81)
 Re_aph = 17810
 Ri_aph = Gr_aph / (Re_aph**2)
 
-# CHROMEX
-Gr_chr = 1.98e6 * (g_vals / 9.81)
-Re_chr = 123
-Ri_chr = Gr_chr / (Re_chr**2)
-
-# CARA (+Light)
 Gr_cara = 4.20e5 * (g_vals / 9.81)
 Re_cara = 1150
 Ri_cara = Gr_cara / (Re_cara**2)
@@ -46,32 +38,32 @@ ax.set_title('a  Richardson Number ($Ri$) vs Gravity', loc='left', fontweight='b
 ax.plot(g_vals, Ri_veg, label='VEGGIE (VPS)', color='#008080', lw=1.8)
 ax.plot(g_vals, Ri_aph, label='APH (0.6 m/s)', color='#005696', lw=1.8)
 ax.plot(g_vals, Ri_cara, label='CARA (+Light)', color='#7570b3', lw=1.8)
-ax.axhline(0.1, color='gray', linestyle=':', label='Forced Limit ($Ri=0.1$)')
-ax.axhline(1.0, color='gray', linestyle='--', label='Mixed Crossover ($Ri=1$)')
+ax.axhline(0.1, color='gray', linestyle=':', label='Forced ($Ri=0.1$)')
+ax.axhline(1.0, color='gray', linestyle='--', label='Mixed ($Ri=1.0$)')
 ax.set_xlabel('Gravitational Acceleration $g$ (m/s²)')
 ax.set_ylabel('Richardson Number $Ri = Gr/Re^2$')
 ax.set_yscale('log')
 ax.set_ylim(1e-4, 10)
 ax.grid(True, linestyle=':', alpha=0.6)
-ax.legend(loc='lower right', framealpha=0.9)
+ax.legend(loc='lower right', ncol=1, framealpha=0.9)
 
 # Panel b: Convective Regime Trajectories
 ax = axs[0, 1]
 ax.set_title('b  Convective Regime Trajectories', loc='left', fontweight='bold')
-gravs = ['0g (Microgravity)', '0.166g (Moon)', '0.38g (Mars)', '1.0g (Earth)']
+gravs = ['0g (Microg)', '0.166g (Moon)', '0.38g (Mars)', '1.0g (Earth)']
 x = np.arange(4)
 ax.plot(x, [0, 0.256, 0.588, 1.551], 'o-', label='VEGGIE', color='#008080', lw=1.6)
 ax.plot(x, [0, 0.021, 0.047, 0.125], 's-', label='APH', color='#005696', lw=1.6)
-ax.plot(x, [0, 0.052, 0.120, 0.318], '^-', label='CARA (+Light)', color='#7570b3', lw=1.6)
-ax.axhspan(0, 0.1, color='#e8f5e9', alpha=0.6, label='Purely Forced')
-ax.axhspan(0.1, 1.0, color='#fff9c4', alpha=0.6, label='Mixed Convection')
-ax.axhspan(1.0, 2.0, color='#ffebee', alpha=0.6, label='Buoyancy Dominated')
+ax.plot(x, [0, 0.052, 0.120, 0.318], '^-', label='CARA (+L)', color='#7570b3', lw=1.6)
+ax.axhspan(0, 0.1, color='#e8f5e9', alpha=0.6, label='Purely Forced (Ri<0.1)')
+ax.axhspan(0.1, 1.0, color='#fff9c4', alpha=0.6, label='Mixed (0.1<Ri<1)')
+ax.axhspan(1.0, 2.0, color='#ffebee', alpha=0.6, label='Buoyant (Ri>1)')
 ax.set_xticks(x)
 ax.set_xticklabels(gravs, rotation=15, ha='right', fontsize=6.5)
 ax.set_ylabel('Richardson Number $Ri$')
 ax.set_ylim(0, 1.8)
 ax.grid(True, linestyle=':', alpha=0.6)
-ax.legend(loc='upper left', fontsize=6)
+ax.legend(loc='upper left', fontsize=5.8, ncol=2, framealpha=0.9)
 
 # Panel c: Thermal Stratification Collapse
 ax = axs[1, 0]
@@ -86,7 +78,7 @@ ax.bar(xx + w/2, dT_0g, width=w, color='#d73027', label='Microgravity 0g')
 ax.set_xticks(xx)
 ax.set_xticklabels(sys, rotation=20, ha='right', fontsize=6.5)
 ax.set_ylabel('Vertical $\Delta T$ (K)')
-ax.legend(loc='upper left')
+ax.legend(loc='upper left', framealpha=0.9)
 ax.grid(axis='y', linestyle=':', alpha=0.6)
 
 # Panel d: TKE Enhancement in 0g
@@ -99,11 +91,12 @@ ax.bar(xx + w/2, tke_0g, width=w, color='#d73027', label='Microgravity 0g')
 ax.set_yscale('log')
 ax.set_xticks(xx)
 ax.set_xticklabels(sys, rotation=20, ha='right', fontsize=6.5)
-ax.set_ylabel('TKE (m²/s², log scale)')
-ax.legend(loc='upper right')
+ax.set_ylabel('TKE (m²/s²)')
+ax.legend(loc='upper right', framealpha=0.9)
 ax.grid(axis='y', linestyle=':', alpha=0.6)
 
 out_dir = Path(__file__).resolve().parent / 'output'
 plt.savefig(out_dir / 'Fig2_gravity_richardson.pdf', bbox_inches='tight')
 plt.savefig(out_dir / 'Fig2_gravity_richardson.png', bbox_inches='tight', dpi=300)
-print("Fig2 generated successfully!")
+plt.close()
+print("Fig2 regenerated clean.")
