@@ -4,6 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Spaceflight Plant Hardware CFD | OpenFOAM Multi-Chamber Framework</title>
+  <script>
+    (function() {
+      let theme = localStorage.getItem('cose_theme');
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <link rel="icon" href="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/cose-logo.png">
+  <link rel="stylesheet" href="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/theme.css">
   <style>
     :root {
       --primary: #005696;
@@ -14,6 +25,16 @@
       --text: #1e293b;
       --text-muted: #64748b;
       --border: #e2e8f0;
+    }
+    html[data-theme="dark"] {
+      --primary: #38bdf8;
+      --primary-dark: #7dd3fc;
+      --accent: #fb7185;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #334155;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
@@ -56,9 +77,13 @@
     
     footer { background: #0f172a; color: #94a3b8; padding: 2.5rem 1.5rem; text-align: center; font-size: 0.85rem; }
     footer a { color: #38bdf8; text-decoration: none; }
+
+    html[data-theme="dark"] th { background: #1e293b; color: #38bdf8; }
+    html[data-theme="dark"] tr:hover { background: #0f172a; }
+    html[data-theme="dark"] .hardware-card { background: #1e293b; }
   </style>
 </head>
-<body>
+<body data-site-id="spaceflight-plant-hardware-cfd">
 
   <header>
     <div>
@@ -241,5 +266,7 @@
     <p>Open-source scientific simulation code hosted on <a href="https://github.com/dr-richard-barker/spaceflight-plant-hardware-cfd" target="_blank">GitHub</a>.</p>
   </footer>
 
+  <script src="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/sites.js"></script>
+  <script src="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/theme.js"></script>
 </body>
 </html>
