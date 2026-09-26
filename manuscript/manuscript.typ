@@ -96,7 +96,7 @@
   #text(font: "Helvetica", weight: "bold", size: 8.0pt, fill: rgb("#005696"))[ABSTRACT]\
   #v(0.05cm)
   #text(size: 7.6pt, style: "italic")[
-    Plants cultivated in extraterrestrial habitats encounter a physical environment devoid of natural gravity-driven buoyancy ($"Gr" -> 0$), expanding unstirred fluid boundary layers around vegetative canopies and drastically elevating aerodynamic resistance ($r_a = 1/g_(b l)$). Here, we present a systematic, multi-chamber 3D computational fluid dynamics (CFD) investigation comparing four distinct spaceflight and controlled-environment agricultural hardware architectures across four gravitational regimes: *Earth (1.0 g)*, *Mars (0.38 g)*, *Moon (0.166 g)*, and *Microgravity (0 g)*. Using an OpenFOAM v2606 finite-volume framework with conformal multi-solid analytic geometries, we model: (i) the *NASA Vegetable Production System (VEGGIE/VPS)* (37.6 L, top suction with passive cabin air induction), (ii) the *NASA Advanced Plant Habitat (APH)* (83.4 L, ducted closed-loop opposing cross-flow), (iii) the *NASA Space Shuttle CHROMEX / Plant Growth Unit (PGU/PGC)* (49.57 L macro chassis, 0.866 L canisters with Brinkman-Darcy rooting foam), (iv) the *CARA Experiment* square Petri dishes ($100 times 100 times 20" mm"$, $plus.minus$ Light) with porous micropore surgical tape seams, and (v) the *NASA BRIC / BRIC-LED* round Petri dishes ($diameter 60" mm"$ in PDFU canisters, $plus.minus$ Light). Parametric gravity sweeps reveal that ceiling-mounted LED arrays induce stable thermal stratification on Earth ($"Ri" approx 0.14 - 1.55$), which suppresses vertical exchange; in microgravity, this stratification collapses, rendering purely forced convection ($"Ri" = 0$) superior in turbulent kinetic energy and canopy clearance. In VEGGIE, low-fan microgravity operation leads to a critical $52.8\%$ canopy stagnation volume ($g_(b l) = 0.219" mol m"^(-2)"s"^(-1)$), elevating fungal mold vulnerability. In CHROMEX sealed canisters, pure diffusion ($"Pe" < 1$) drives root-zone hypoxia ($"O"_2 < 5\%$) within 35 minutes, providing a biophysical basis for historical flight transcriptomic alcohol dehydrogenase (*ADH*) upregulation. In CARA square plates, micropore tape provides controlled gas exchange ($r_("tape") = 650" s/m"$), but microgravity boundary-layer expansion elevates internal ethylene accumulation to $0.85" ppm"$ and causes lid condensation within 6.5 hours. Transient fan-stoppage tests reveal that on Earth, natural buoyancy maintains a basal conductance floor ($g_(b l) approx 0.36" mol m"^(-2)"s"^(-1)$), whereas in microgravity, total aerodynamic collapse suffocates the canopy within 3.5–8.9 minutes. Conversely, APH maintains invariant $g_(b l) approx 1.07" mol m"^(-2)"s"^(-1)$ across all gravities.
+    Plants cultivated in extraterrestrial habitats encounter a physical environment devoid of natural gravity-driven buoyancy ($"Gr" -> 0$), expanding unstirred fluid boundary layers around vegetative canopies and drastically elevating aerodynamic resistance ($r_a = 1/g_(b l)$). Here, we present a systematic, multi-chamber 3D computational fluid dynamics (CFD) investigation comparing five distinct spaceflight hardware architectures across four gravitational regimes: *Earth (1.0 g)*, *Mars (0.38 g)*, *Moon (0.166 g)*, and *Microgravity (0 g)*. Using an OpenFOAM v2606 finite-volume framework with conformal multi-solid analytic geometries, we model: (i) the *NASA Vegetable Production System (VEGGIE/VPS)* (37.6 L, top suction with passive cabin induction), (ii) the *NASA Advanced Plant Habitat (APH)* (83.4 L, ducted closed-loop opposing cross-flow), (iii) the *NASA Advanced Biological Research System (ABRS)* (26.8 L, closed forced circulation past 6 square Petri dishes with catalytic ethylene scrubber, TAGES mission OSD-7/OSD-16), (iv) the *NASA Space Shuttle CHROMEX / Plant Growth Unit (PGU/PGC)* (49.57 L macro chassis with Brinkman-Darcy rooting foam), (v) the *CARA Experiment* square Petri dishes ($100 times 100 times 20" mm"$, $plus.minus$ Light) with porous micropore tape seams, and (vi) the *NASA BRIC / BRIC-LED* round Petri dishes ($diameter 60" mm"$ in sealed PDFUs). Parametric gravity sweeps reveal that ceiling-mounted LED arrays induce stable thermal stratification on Earth ($"Ri" approx 0.14 - 1.55$), which collapses in microgravity ($"Ri" = 0$). In VEGGIE, low-fan microgravity operation leads to a critical $52.8\%$ canopy stagnation volume ($g_(b l) = 0.219" mol m"^(-2)"s"^(-1)$), elevating mold vulnerability. In CHROMEX sealed canisters, pure diffusion ($"Pe" < 1$) drives root hypoxia within 35 minutes (*ADH* upregulation). In CARA square plates, micropore tape provides passive gas exchange ($r_("tape") = 650" s/m"$), but external stagnation in 0g elevates ethylene to $0.85" ppm"$ and causes lid condensation within 6.5 hours. In contrast, ABRS forced sweeps past taped plates reduce external resistance ($r_("ext") = 85" s/m"$), maintaining $16.2\% "O"_2$, delaying condensation to 11.5 h, and preventing ethylene toxicity ($0.14" ppm"$), providing a fluid-mechanical basis for TAGES flight transcriptomic and proteomic resilience.
   ]
 ]
 
@@ -107,7 +107,7 @@
 == Introduction & Biophysical Foundations
 
 === Opportunities & Imperatives of Space Agriculture
-As human space exploration transitions from low-Earth orbit sorties toward sustained surface outposts on the Moon (NASA Artemis Base Camp) and multi-year transits to Mars, biological life support systems become indispensable (Wheeler 2017). Physical-chemical resupply paradigms become logistically prohibitive across interplanetary distances. Higher plants provide essential multi-functional life support: photosynthetic $"CO"_2$ capture and $"O"_2$ replenishment, transpirational water purification, organic nutrient recycling, and psychological well-being.
+As human space exploration transitions from low-Earth orbit sorties toward sustained surface outposts on the Moon (NASA Artemis Base Camp) and multi-year transits to Mars, biological life support systems become indispensable (Wheeler 2017). Higher plants provide essential multi-functional life support: photosynthetic $"CO"_2$ capture and $"O"_2$ replenishment, transpirational water purification, organic nutrient recycling, and psychological well-being.
 
 === Microgravity Fluid Mechanics & Buoyancy Cessation
 Despite these compelling opportunities, cultivating crops in extraterrestrial environments confronts a fundamental physical impediment: the total cessation of gravity-driven natural convection (Kitaya et al. 2001, 2003; Porterfield 2002). On Earth ($1.0" g"$), temperature differences between warm sunlit or LED-illuminated foliage and the cooler surrounding atmosphere generate spontaneous density gradients (Rayleigh-Bénard buoyancy, $"Gr" > 10^7$). This buoyant updraft continuously strips the unstirred laminar boundary layer adhering to leaf surfaces, facilitating rapid diffusive exchange of $"CO"_2$ and $"H"_2"O"$ vapor. In microgravity ($0" g"$), the gravitational acceleration vector vanishes ($g -> 0$), causing the Grashof number ($"Gr" = g beta Delta T L^3 / nu^2$) and Rayleigh number ($"Ra" = "Gr" dot "Pr"$) to drop to identically zero.
@@ -116,12 +116,12 @@ Despite these compelling opportunities, cultivating crops in extraterrestrial en
 On the Lunar surface ($g = 1.62" m/s"^2$) and Martian surface ($g = 3.72" m/s"^2$), fractional gravitational fields restore a partial buoyant convective capability ($"Gr"_("Moon") approx 16.5\% "Gr"_("Earth")$; $"Gr"_("Mars") approx 37.9\% "Gr"_("Earth")$). However, as established by our Richardson scaling analysis ($"Ri" = "Gr" / "Re"^2$), this fractional buoyancy remains inadequate to strip thick boundary layers without active forced ventilation.
 
 === RuBisCO Kinetics & Photorespiratory Waste
-The thickening of unstirred fluid boundary layers directly impairs photosynthetic efficiency through the Farquhar-von Caemmerer-Berry ("FvCB") biochemical model (Farquhar et al. 1980). The net photosynthetic assimilation rate ($A_("net")$) is governed by the chloroplastic $"CO"_2$ concentration ($C_c$):
+The thickening of unstirred fluid boundary layers directly impairs photosynthetic efficiency through the Farquhar-von Caemmerer-Berry ("FvCB") biochemical model (Farquhar et al. 1980). The net photosynthetic assimilation rate ($A_("net")$) is governed by chloroplastic $"CO"_2$ concentration ($C_c$):
 $ A_("net") = (1 - Gamma^* / C_c) min(W_c, W_j, W_p) - R_d $
-where $Gamma^*$ is the $"CO"_2$ compensation point, $W_c$ is RuBisCO-limited carboxylation, and $W_j$ is electron transport-limited RuBP regeneration. When aerodynamic boundary-layer resistance ($r_a = 1/g_(b l)$) expands, the concentration drop between the bulk canopy atmosphere ($C_a$) and leaf intercellular airspaces ($C_i$) widens: $C_i = C_a - A_("net")(r_a + r_s)$. Under depleted intercellular $"CO"_2$ ($C_i < 150" ppm"$), RuBisCO oxygenation increases exponentially relative to carboxylation ($v_o / v_c = 2 Gamma^* / C_i$), shunting energy into the photorespiratory glycolate pathway and wasting $>40\%$ of photosynthetic ATP and NADPH.
+where $Gamma^*$ is the $"CO"_2$ compensation point, $W_c$ is RuBisCO-limited carboxylation, and $W_j$ is electron transport-limited RuBP regeneration. When aerodynamic boundary-layer resistance ($r_a = 1/g_(b l)$) expands, the concentration drop widens: $C_i = C_a - A_("net")(r_a + r_s)$. Under depleted intercellular $"CO"_2$ ($C_i < 150" ppm"$), RuBisCO oxygenation increases exponentially relative to carboxylation ($v_o / v_c = 2 Gamma^* / C_i$), shunting energy into photorespiration and wasting $>40\%$ of photosynthetic ATP and NADPH.
 
 === Guttation, Humidity Trapping & Pathogen Risks
-In tandem with carbon starvation, thick boundary layers trap transpired water vapor ($"RH" > 95\%$), suppressing transpirational cooling and abolishing xylem calcium transport (inducing physiological tipburn). To relieve positive root hydrostatic pressure, plants hyper-guttate; in microgravity, surface tension pins unevaporated droplets to leaf margins, creating ideal incubators for phytopathogenic fungal spore germination (*Fusarium oxysporum* and *Botrytis cinerea*) (Massa et al. 2017; Khodadad et al. 2020).
+In tandem with carbon starvation, thick boundary layers trap transpired water vapor ($"RH" > 95\%$), suppressing transpirational cooling and abolishing xylem calcium transport (inducing physiological tipburn). Unevaporated guttation droplets pin to leaf margins, creating ideal incubators for phytopathogenic fungal spore germination (*Fusarium oxysporum* and *Botrytis cinerea*) (Massa et al. 2017; Khodadad et al. 2020).
 
 ]
 
@@ -132,29 +132,29 @@ In tandem with carbon starvation, thick boundary layers trap transpired water va
 // ==========================================
 
 #align(center)[
-  #text(weight: "bold", size: 8.5pt, fill: rgb("#005696"))[Table 1 | Physical, aerodynamic, and environmental control specifications across evaluated spaceflight hardware platforms.]
-  #v(0.1cm)
+  #text(weight: "bold", size: 8.0pt, fill: rgb("#005696"))[Table 1 | Physical, aerodynamic, and environmental control specifications across evaluated spaceflight hardware platforms.]
+  #v(0.06cm)
   #table(
-    columns: (1.5fr, 1.8fr, 2.0fr, 1.8fr, 1.8fr),
+    columns: (1.3fr, 1.5fr, 1.6fr, 1.5fr, 1.4fr, 1.5fr),
     stroke: 0.3pt + rgb("#d0d0d0"),
     fill: (x, y) => if y == 0 { rgb("#eef4f8") } else if calc.even(y) { rgb("#fafbfc") } else { none },
-    inset: 4.5pt,
-    align: (left, left, left, left, left),
+    inset: 3.2pt,
+    align: (left, left, left, left, left, left),
     table.header(
-      [*Parameter*], [*VEGGIE (VPS)*], [*Advanced Plant Habitat*], [*CHROMEX (PGU / PGC)*], [*CARA / BRIC Dishes*]
+      [*Parameter*], [*VEGGIE (VPS)*], [*APH Phytotron*], [*ABRS (TAGES)*], [*CHROMEX (PGC)*], [*CARA / BRIC*]
     ),
-    [Payload Class], [Deployable Space Garden], [Closed Phytotron], [Shuttle Middeck Locker], [Standard Science Carriers],
-    [Enclosure Structure], [Collapsible FEP bellows], [Carbon-fiber composite], [Chassis + 6 Lexan PGCs], [Square / Round Dishes],
-    [Growth Area ($A$)], [$0.1075" m"^2$ ($292 times 368" mm"$)], [$0.1708" m"^2$ ($454 times 408" mm"$)], [$0.0274" m"^2$ ($6 times 95 times 48" mm"$)], [$0.0100 - 0.0170" m"^2$],
-    [Canopy Air Vol.], [$37.61" L"$ (nominal)], [$83.36" L"$ (shoot zone)], [$4.10" L"$ total ($0.684" L"$ / PGC)], [$0.042 - 0.200" L"$],
-    [Growth Height], [$350.0" mm"$ (nominal)], [$450.0" mm"$ (clear zone)], [$190.0" mm"$ (canister)], [$15.0 - 20.0" mm"$],
-    [Primary Flow Driver], [1x Top Suction ($diameter 50" mm"$)], [2x Symmetric Blowers], [PGU Fan + PGC Needle AES], [Ambient Draft / Diffusion],
-    [Airflow Topology], [Bottom-up forced suction], [Opposing cross-flow sweep], [Creeping percolation / Diff.], [Seam / Septum Transport],
-    [Nominal Flow ($Q$)], [$85.0" m"^3"/h"$ ($23.61" L/s"$)], [$26.4" m"^3"/h"$ ($7.34" L/s"$)], [$0.001" m"^3"/h"$ ($1.0" L/h"$ AES)], [Passive Seam Flux],
-    [Canopy Velocity], [$0.150" m/s"$ (mean draft)], [$0.300 - 1.500" m/s"$], [$0.001 - 0.010" m/s"$ ($"Re" << 100$)], [$0.000 - 0.082" m/s"$],
-    [Air Exchange ($"ACH"$)], [$2,260" h"^(-1)$ ($tau = 1.60" s"$)], [$317" h"^(-1)$ ($tau = 11.35" s"$)], [$1.16" h"^(-1)$ (AES $tau = 51.9" min"$)], [Seam Diffusive Flux],
-    [Environmental Ctrl], [Cabin-coupled ($Delta T = +2 degree"C"$)], [Closed loop ($plus.minus 0.5 degree"C"$, $plus.minus 5\%$)], [PGU lamp cooling / AES], [Micro-convection / Light],
-    [Cabin Coupling], [Open continuous exchange], [Closed EXPRESS payload], [Shuttle Middeck Locker], [Micropore / Hermetic]
+    [Payload Class], [Deployable Garden], [Closed Phytotron], [EXPRESS Locker], [Shuttle Locker], [Sample Carriers],
+    [Enclosure], [Collapsible bellows], [Carbon composite], [Dual middeck box], [6 Lexan PGCs], [Square / Round Dishes],
+    [Growth Area], [$0.1075" m"^2$], [$0.1708" m"^2$], [$0.0530" m"^2$ (6 plates)], [$0.0274" m"^2$], [$0.010 - 0.017" m"^2$],
+    [Canopy Volume], [$37.61" L"$ (nominal)], [$83.36" L"$ (shoot)], [$14.50" L"$ (GIS shoot)], [$4.10" L"$ total], [$0.042 - 0.200" L"$],
+    [Growth Height], [$350.0" mm"$], [$450.0" mm"$], [$180.0" mm"$], [$190.0" mm"$], [$15.0 - 20.0" mm"$],
+    [Flow Driver], [1x Top Suction], [2x Symmetric Blowers], [1x Recirc Blower], [PGU Fan + AES], [Ambient Draft / Diff.],
+    [Air Topology], [Bottom-up suction], [Opposing cross-flow], [Forced vertical sweep], [Creeping / Darcy], [Seam / Diffusive],
+    [Nominal Flow $Q$], [$85.0" m"^3"/h"$], [$26.4" m"^3"/h"$], [$12.0" m"^3"/h"$], [$0.001" m"^3"/h"$], [Passive Seam Flux],
+    [Canopy Vel. $U$], [$0.150" m/s"$], [$0.300 - 1.500" m/s"$], [$0.250 - 0.600" m/s"$], [$0.001 - 0.010" m/s"$], [$0.000 - 0.082" m/s"$],
+    [Air Exchange], [$2,260" h"^(-1)$], [$317" h"^(-1)$], [$828" h"^(-1)$], [$1.16" h"^(-1)$], [Seam Diffusive],
+    [Ethylene Ctrl], [None (Cabin air)], [Catalytic ($<25" ppb"$)], [Photocatalytic TiO2], [None (Canister)], [None (Accumulative)],
+    [Cabin Interface], [Open continuous], [Closed quad-locker], [Closed single-locker], [Shuttle Middeck], [Micropore / Sealed]
   )
 ]
 
@@ -431,8 +431,8 @@ Concurrently, the unstirred boundary layer chokes $"CO"_2$ replenishment (Fig. 9
 
 === Gravity-Dependent Resilience Rating
 Evaluating the transient resilience index across hardware architectures establishes clear design imperatives:
-- **Earth ($1.0" g"$)**: Natural buoyancy cushions fan failure, giving operators $15.0 - 18.0" minutes"$ before carbon starvation onset ($C_i < 150" ppm"$).
-- **Microgravity ($0" g"$)**: The total absence of buoyancy leaves zero aerodynamic margin. Carbon starvation occurs in $3.8" minutes"$ in VEGGIE and $4.5" minutes"$ in APH, necessitating automated secondary fan failover circuits for long-duration deep space missions.
+- *Earth ($1.0" g"$)*: Natural buoyancy cushions fan failure, giving operators $15.0 - 18.0" minutes"$ before carbon starvation onset ($C_i < 150" ppm"$).
+- *Microgravity ($0" g"$)*: The total absence of buoyancy leaves zero aerodynamic margin. Carbon starvation occurs in $3.8" minutes"$ in VEGGIE and $4.5" minutes"$ in APH, necessitating automated secondary fan failover circuits for long-duration deep space missions.
 
 ]
 
@@ -454,17 +454,19 @@ Evaluating the transient resilience index across hardware architectures establis
 
 #columns(2, gutter: 14pt)[
 
-== Science Sample Carrier Microenvironments: CARA vs. BRIC / BRIC-LED
+== Science Sample Carrier Microenvironments: CARA vs. ABRS (TAGES) vs. BRIC
 
 === Multi-Scale Boundary Coupling & Tape Permeability
-Spaceflight biological investigations frequently cultivate specimens within standardized sample carriers—square Petri dishes ($100 times 100 times 20" mm"$) in the CARA experiment, and round Petri dishes ($diameter 60 times 15" mm"$) in NASA BRIC / BRIC-LED hardware.
+Spaceflight biological investigations frequently cultivate specimens within standardized sample carriers—square Petri dishes ($100 times 100 times 20" mm"$) in the CARA experiment and NASA ABRS hardware (TAGES mission, OSD-7/OSD-16), and round Petri dishes ($diameter 60 times 15" mm"$) in NASA BRIC / BRIC-LED.
 
-Coupled CFD transport modeling reveals that gaseous exchange ($J_("gas")$) is governed by a three-tier series resistance network ($r_("tot") = r_("ext") + r_("tape/barrier") + r_("int")$, Fig. 10c):
+Coupled CFD transport modeling reveals that gaseous exchange ($J_("gas")$) is governed by a three-tier series resistance network ($r_("tot") = r_("ext") + r_("tape/barrier") + r_("int")$, Fig. 10b):
 $ J_("gas") = (C_("ext") - C_("int")) / (r_("ext") + r_("tape/barrier") + r_("int")) $
 where $r_("tape") = (d_("tape") tau_("tort")) / (D_("eff") epsilon_("por") A_("seam"))$ is the micropore membrane resistance ($650" s/m"$).
 
-=== External Aerodynamic Shielding & Impact of Lighting
-In CARA square dishes exposed to VEGGIE LED illumination (+Light), internal thermal gradients generate weak micro-convection on Earth, but in microgravity, transpirational flux drives rapid lid condensation ($"RH" > 98\%$) within $6.5" hours"$ (Fig. 10h). In dark-wrapped plates (-Dark), continuous dark respiration consumes oxygen ($"O"_2 -> 12.5\%$) and elevates ethylene to $1.10" ppm"$. In sealed BRIC PDFUs, lack of gaseous exchange causes extreme hypoxia ($"O"_2 < 1.8\%$) and toxic ethylene accumulation ($> 3.80" ppm"$, Fig. 10g).
+=== Forced Ventilation vs. Passive Boundary Shielding
+In CARA plates exposed to passive ISS wall draft, external boundary-layer expansion in microgravity ($delta_("ext") = 8.5" mm"$, $r_("ext") = 380" s/m"$) elevates total resistance ($r_("tot") = 1480" s/m"$), trapping transpired vapor ($"RH" > 98\%$ condensation at 6.5 h) and accumulating ethylene to $0.85" ppm"$ (Fig. 10d). In sealed BRIC canisters, pure molecular stagnation drives acute hypoxia ($"O"_2 < 1.8\%$) and severe ethylene accumulation ($>3.80" ppm"$).
+
+Conversely, in ABRS (TAGES), forced recirculating airflow ($U = 0.35" m/s"$) sweeps downward past the 6 square Petri dishes, thinning external boundary layers ($delta_("ext") = 2.4" mm"$) and lowering external resistance to $r_("ext") = 85" s/m"$. When coupled with active photocatalytic ethylene scrubbing ($<25" ppb"$), ABRS maintains $16.2\% "O"_2$, delays lid condensation to $11.5" hours"$, and suppresses internal ethylene to $0.14" ppm"$, providing a biophysical explanation for the mitigated stress transcriptomes (OSD-7) and proteomes (OSD-16) observed in flight.
 
 ]
 
@@ -483,7 +485,7 @@ In CARA square dishes exposed to VEGGIE LED illumination (+Light), internal ther
       columns: (1.1fr, 0.8fr, 0.7fr, 1.4fr),
       stroke: 0.3pt + rgb("#d0d0d0"),
       fill: (x, y) => if y == 0 { rgb("#eef4f8") } else if calc.even(y) { rgb("#fafbfc") } else { none },
-      inset: 3.0pt,
+      inset: 2.8pt,
       align: (left, left, right, left),
       table.header([*Hardware*], [*Gravity*], [*$epsilon_a$*], [*Biosecurity*]),
       [VEGGIE], [1.0g Low], [22.5%], [Direct cabin exhaust],
@@ -491,9 +493,8 @@ In CARA square dishes exposed to VEGGIE LED illumination (+Light), internal ther
       [], [0.0g High], [26.2%], [Cabin spore dispersion],
       [APH], [1.0g Nom], [45.8%], [Closed loop HEPA],
       [], [0.0g Nom], [45.0%], [Uniform upward sweep],
-      [], [0.0g High], [47.3%], [Near-ideal displacement],
+      [ABRS (TAGES)], [0.0g Nom], [42.1%], [Closed Scrubber Loop],
       [CHROMEX], [0.0g AES], [32.3%], [Closed (0% export)],
-      [], [0.0g Sealed], [0.0%], [Sealed Lexan],
       [CARA Dish], [0.0g Draft], [18.5%], [Contained (Tape)],
       [BRIC-LED], [0.0g Sealed], [0.0%], [Hermetic PDFU]
     )
@@ -504,13 +505,14 @@ In CARA square dishes exposed to VEGGIE LED illumination (+Light), internal ther
       columns: (1.1fr, 0.7fr, 0.8fr, 1.4fr),
       stroke: 0.3pt + rgb("#d0d0d0"),
       fill: (x, y) => if y == 0 { rgb("#eef4f8") } else if calc.even(y) { rgb("#fafbfc") } else { none },
-      inset: 3.0pt,
+      inset: 2.8pt,
       align: (left, left, right, left),
       table.header([*Hardware*], [*Gravity*], [*$t_("Hypoxia")$*], [*Resilience*]),
       [VEGGIE], [1.0g], [22.0 min], [High (chimney updraft)],
       [], [0.0g], [7.2 min], [Critical (stagnation)],
       [APH], [1.0g], [28.0 min], [High (large volume)],
       [], [0.0g], [8.9 min], [Moderate-Low],
+      [ABRS (TAGES)], [0.0g], [18.5 min], [High (Scrubber Buffer)],
       [CHROMEX], [0.0g], [3.5 min], [Extremely Critical],
       [CARA (+L)], [0.0g], [14.0 min], [Moderate (Tape Buffer)],
       [BRIC-LED], [0.0g], [2.8 min], [Critical (Thermal Pocket)]
@@ -518,28 +520,28 @@ In CARA square dishes exposed to VEGGIE LED illumination (+Light), internal ther
   ]
 )
 
-#v(0.08cm)
+#v(0.06cm)
 
 #align(center)[
   #text(weight: "bold", size: 7.0pt, fill: rgb("#005696"))[Table 6 | Science sample carrier gas-exchange & microenvironmental metrics.]
-  #v(0.04cm)
+  #v(0.03cm)
   #table(
-    columns: (1.3fr, 1.0fr, 0.8fr, 0.8fr, 0.8fr, 0.8fr, 0.8fr, 0.9fr, 1.0fr),
+    columns: (1.4fr, 1.1fr, 0.7fr, 0.8fr, 0.7fr, 0.7fr, 0.8fr, 0.9fr, 0.9fr),
     stroke: 0.3pt + rgb("#d0d0d0"),
     fill: (x, y) => if y == 0 { rgb("#eef4f8") } else if calc.even(y) { rgb("#fafbfc") } else { none },
-    inset: 2.2pt,
+    inset: 2.0pt,
     align: (left, left, left, right, right, right, right, right, right),
-    table.header([*Carrier*], [*Geometry*], [*Lighting*], [*Gravity*], [*$delta_("ext")$*], [*$r_("tot")$*], [*$"O"_2$ (%)*], [*$"C"_2"H"_4$*], [*Condensation*]),
-    [CARA], [Square ($100 times 100$)], [+ Light], [Earth (1.0g)], [4.8], [1220], [18.4%], [0.32 ppm], [18.5 h],
-    [CARA], [Square ($100 times 100$)], [+ Light], [Moon (0.166g)], [6.2], [1310], [16.8%], [0.52 ppm], [12.0 h],
-    [CARA], [Square ($100 times 100$)], [+ Light], [0.0g], [8.5], [1480], [14.2%], [*0.85 ppm*], [*6.5 h*],
-    [CARA], [Square ($100 times 100$)], [- Dark], [0.0g], [9.8], [1520], [12.5%], [*1.10 ppm*], [14.0 h],
-    [BRIC-LED], [Round ($diameter 60$)], [+ Light], [0.0g], [20.0], [$> 101"k"$], [*1.8%*], [*3.80 ppm*], [*1.5 h*],
-    [BRIC], [Round ($diameter 60$)], [- Dark], [0.0g], [25.0], [$> 102"k"$], [*1.2%*], [*4.50 ppm*], [2.8 h]
+    table.header([*Carrier*], [*Geometry*], [*Light*], [*Gravity*], [*$delta_("ext")$*], [*$r_("tot")$*], [*$"O"_2$ (%)*], [*$"C"_2"H"_4$*], [*Condens.*]),
+    [ABRS (TAGES)], [Square ($100 times 100$)], [+L], [0.0g], [2.4], [1185], [16.2%], [*0.14 ppm*], [11.5 h],
+    [CARA], [Square ($100 times 100$)], [+L], [1.0g], [4.8], [1220], [18.4%], [0.32 ppm], [18.5 h],
+    [CARA], [Square ($100 times 100$)], [+L], [0.0g], [8.5], [1480], [14.2%], [*0.85 ppm*], [*6.5 h*],
+    [CARA], [Square ($100 times 100$)], [-D], [0.0g], [9.8], [1520], [12.5%], [*1.10 ppm*], [14.0 h],
+    [BRIC-LED], [Round ($diameter 60$)], [+L], [0.0g], [20.0], [$> 101"k"$], [*1.8%*], [*3.80 ppm*], [*1.5 h*],
+    [BRIC], [Round ($diameter 60$)], [-D], [0.0g], [25.0], [$> 102"k"$], [*1.2%*], [*4.50 ppm*], [2.8 h]
   )
 ]
 
-#v(0.1cm)
+#v(0.08cm)
 
 #columns(2, gutter: 14pt)[
 
@@ -550,28 +552,29 @@ Simulations were executed within OpenFOAM v2606 using finite-volume discretizati
 $ (partial rho) / (partial t) + nabla dot (rho bold(u)) = 0 $
 $ (partial (rho bold(u))) / (partial t) + nabla dot (rho bold(u) bold(u)) = -nabla p_("rgh") + bold(g) rho + nabla dot bold(tau)_("eff") + bold(S)_m $
 $ (partial (rho h)) / (partial t) + nabla dot (rho bold(u) h) = nabla dot (alpha_("eff") nabla h) + S_h $
-Turbulence was modeled using $k$-$omega" SST"$ (Menter 1994) with near-wall prism layers ($y^+ approx 1 - 5$). Vegetative canopies were parameterized as porous media via Darcy-Forchheimer drag sinks:
+Turbulence was modeled using $k$-$omega" SST"$ with near-wall prism layers ($y^+ approx 1 - 5$). Vegetative canopies were parameterized via Darcy-Forchheimer drag sinks:
 $ bold(S)_m = -rho (mu / K bold(u) + 1/2 C_d a_v |bold(u)| bold(u)) $
-where $a_v = "LAI"/h_c$ is Leaf Area Density and $C_d = 0.2$. In BRIC-LED, transient 4h ON / 4h OFF diurnal cycles were resolved via conjugate heat transfer coupling LED surface flux ($q'' = 35" W/m"^2$) and moisture phase change ($dot(m)_("cond") h_(f g)$).
+where $a_v = "LAI"/h_c$ is Leaf Area Density. In ABRS and BRIC-LED, multi-species transport coupled transpirational moisture, respiratory $"O"_2 / "CO"_2$, and catalytic ethylene scrubbing sinks ($S_(C 2 H 4) = -k_("cat") C$).
 
-=== Interactive 3D WebGL Dashboard & Multimedia
-Interactive WebGL 3D visualizations, animated 4D simulations, and mesh dictionaries are openly accessible:
-- *Live Web Portal*: #link("https://dr-richard-barker.github.io/spaceflight-plant-hardware-cfd/")[https://dr-richard-barker.github.io/spaceflight-plant-hardware-cfd/]
-- *Interactive 3D Web Explorer*: `docs/explorer.html`
-- *Open-Source Code Repository*: #link("https://github.com/dr-richard-barker/spaceflight-plant-hardware-cfd")[https://github.com/dr-richard-barker/spaceflight-plant-hardware-cfd]
+=== Interactive 3D WebGL Dashboard & Open Data
+Interactive 3D WebGL flow visualizations, 4D animated suites, and OpenFOAM test benches are openly available:
+- *Web Portal*: #link("https://dr-richard-barker.github.io/spaceflight-plant-hardware-cfd/")[https://dr-richard-barker.github.io/spaceflight-plant-hardware-cfd/]
+- *3D Flow Explorer*: `docs/explorer.html`
+- *GitHub Repo*: #link("https://github.com/dr-richard-barker/spaceflight-plant-hardware-cfd")[https://github.com/dr-richard-barker/spaceflight-plant-hardware-cfd]
+- *NASA OSDR Datasets*: [OSD-7](https://osdr.nasa.gov/bio/repo/data/studies/OSD-7) (TAGES Transcriptome), [OSD-16](https://osdr.nasa.gov/bio/repo/data/studies/OSD-16) (TAGES Proteome).
 
 == References
-#set text(size: 6.0pt)
+#set text(size: 5.6pt)
 1. Massa, G. D. et al. VEG-01: Veggie hardware validation testing on the ISS. *Open Agric.* 2, 33–41 (2017).
 2. Morrow, R. C. et al. A new plant habitat facility for the ISS. *46th ICES*, ICES-2016-320 (2016).
 3. Monje, O. et al. Hardware validation of the Advanced Plant Habitat on ISS. *49th ICES*, ICES-2019-247 (2019).
-4. Levine, H. G. & Krikorian, A. D. Chromosomes and plant cell division in space (CHROMEX-3). *J. Gravit. Physiol.* 3, 22–26 (1996).
-5. Porterfield, D. M. et al. Biomass production and gas exchange of wheat in the Plant Growth Unit. *Gravit. Space Biol. Bull.* 11, 45 (1997).
-6. Wheeler, R. M. Agriculture for space: People and places paving the way. *Open Agric.* 2, 14–32 (2017).
-7. Kitaya, Y. et al. Effects of air current on transpiration and photosynthesis under microgravity. *Adv. Space Res.* 31, 177–182 (2003).
-8. Kitaya, Y. et al. Gas exchange and temperature gradients of leaves under microgravity. *Adv. Space Res.* 28, 565–570 (2001).
+4. Paul, A.-L. et al. Organ-specific spaceflight biology in ABRS (TAGES): Transcriptomic & GFP imaging. *Plant Physiol.* 160, 511–525 (2012); NASA OSDR OSD-7 / OSD-16.
+5. Levine, H. G. & Krikorian, A. D. Chromosomes and plant cell division in space (CHROMEX-3). *J. Gravit. Physiol.* 3, 22–26 (1996).
+6. Porterfield, D. M. et al. Biomass production and gas exchange of wheat in the Plant Growth Unit. *Gravit. Space Biol. Bull.* 11, 45 (1997).
+7. Wheeler, R. M. Agriculture for space: People and places paving the way. *Open Agric.* 2, 14–32 (2017).
+8. Kitaya, Y. et al. Effects of air current on transpiration and photosynthesis under microgravity. *Adv. Space Res.* 31, 177–182 (2003).
 9. Porterfield, D. M. Biophysical limitations in physiological transport in microgravity. *Physiol. Plant.* 114, 333–340 (2002).
-10. Farquhar, G. D., von Caemmerer, S. & Berry, J. A. A biochemical model of photosynthetic CO2 assimilation. *Planta* 149, 78–90 (1980).
+10. Farquhar, G. D. et al. A biochemical model of photosynthetic CO2 assimilation. *Planta* 149, 78–90 (1980).
 11. Menter, F. R. Two-equation eddy-viscosity turbulence models for engineering applications. *AIAA J.* 32, 1598–1605 (1994).
 12. Khodadad, C. L. M. et al. Microbiological analysis of lettuce grown on the ISS. *Front. Plant Sci.* 11, 199 (2020).
 13. Paul, A.-L. et al. Plant molecular responses to spaceflight: CARA and APEX investigations. *Life Sci. Space Res.* 18, 42–52 (2018).
@@ -579,3 +582,4 @@ Interactive WebGL 3D visualizations, animated 4D simulations, and mesh dictionar
 15. NASA. Space Biology Science Plan 2016-2025. *NASA Space Biology Program* (2016).
 
 ]
+

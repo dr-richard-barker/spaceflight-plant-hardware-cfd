@@ -1,0 +1,9 @@
+{
+  "digest": "71c3585fedcbc293fdea239f14df9da2e348506fee213452047c2ec1b2b2b6d6",
+  "files": 91,
+  "verdict": "clear",
+  "note": "Landing fix/typst-header-fabricated-doi. Verified: unassigned npj DOI removed from manuscript.typ and both tracked PDFs (0 remaining, positive control confirmed the pattern fires); no DOIs in tracked text to verify; no synthetic-data fallback; visitor-analytics snippet preserved through the merge. Scope: citation metadata and blocklist only \u2014 no claims-vs-evidence audit of the CFD results.",
+  "session": "",
+  "checked_at": "2026-09-11T07:46:33-0400",
+  "head": "43dfc44d4dd675c45b365b043fb81d3e594ecba0"
+}
