@@ -45,17 +45,44 @@ ax_a.annotate('', xy=(0.24, 1.02), xytext=(0.24, 0.90), arrowprops=dict(arrowsty
 ax_a.text(0.24, 1.05, 'VEGGIE\n(37.6 L)', ha='center', fontsize=5.0, fontweight='bold', color=c_veg)
 ax_a.text(0.24, 0.42, 'Top Suction\n6 Pillows', ha='center', fontsize=4.8, color=c_veg, fontweight='bold')
 
-# ABRS (Single Middeck Locker with 6 square Petri dishes)
+# ABRS GIS (Single Middeck Locker with 3-column 2-tier Carousel Frame)
 rect_abrs = patches.Rectangle((0.52, 0.1), 0.46, 0.68, linewidth=1.2, edgecolor=c_abrs, facecolor='#e8f5e9')
 ax_a.add_patch(rect_abrs)
-# 6 square Petri dishes in 2 tiers of 3
-for row in [0.48, 0.22]:
-    for col in [0.55, 0.68, 0.81]:
-        d = patches.Rectangle((col, row), 0.10, 0.18, linewidth=0.8, edgecolor='#388e3c', facecolor='#c8e6c9')
-        ax_a.add_patch(d)
+
+# GIS structural frame (U-shaped chassis)
+frame = patches.Rectangle((0.56, 0.16), 0.38, 0.56, linewidth=1.0, edgecolor='#1e293b', facecolor='#f1f5f9', linestyle='-')
+ax_a.add_patch(frame)
+
+# Lateral Green LED PCB on left
+pcb = patches.Rectangle((0.54, 0.20), 0.02, 0.48, linewidth=0.6, edgecolor='#15803d', facecolor='#22c55e')
+ax_a.add_patch(pcb)
+
+# Camera lens on right facing Plate 1
+lens = patches.Rectangle((0.88, 0.24), 0.03, 0.14, linewidth=0.6, edgecolor='#0f172a', facecolor='#334155')
+ax_a.add_patch(lens)
+
+# 3 Columns of Plates: Left (5,6), Rear (3,4), Right (1,2)
+# Right column: 1 (bot), 2 (top)
+d1 = patches.Rectangle((0.81, 0.22), 0.06, 0.18, linewidth=0.6, edgecolor='#388e3c', facecolor='#c8e6c9'); ax_a.add_patch(d1)
+d2 = patches.Rectangle((0.81, 0.48), 0.06, 0.18, linewidth=0.6, edgecolor='#388e3c', facecolor='#c8e6c9'); ax_a.add_patch(d2)
+ax_a.text(0.84, 0.31, '1', ha='center', va='center', fontsize=4.2, fontweight='bold', color='#1b5e20')
+ax_a.text(0.84, 0.57, '2', ha='center', va='center', fontsize=4.2, fontweight='bold', color='#1b5e20')
+
+# Rear column: 3 (bot), 4 (top)
+d3 = patches.Rectangle((0.71, 0.22), 0.08, 0.18, linewidth=0.6, edgecolor='#388e3c', facecolor='#c8e6c9'); ax_a.add_patch(d3)
+d4 = patches.Rectangle((0.71, 0.48), 0.08, 0.18, linewidth=0.6, edgecolor='#388e3c', facecolor='#c8e6c9'); ax_a.add_patch(d4)
+ax_a.text(0.75, 0.31, '3', ha='center', va='center', fontsize=4.2, fontweight='bold', color='#1b5e20')
+ax_a.text(0.75, 0.57, '4', ha='center', va='center', fontsize=4.2, fontweight='bold', color='#1b5e20')
+
+# Left column: 5 (bot), 6 (top)
+d5 = patches.Rectangle((0.59, 0.22), 0.06, 0.18, linewidth=0.6, edgecolor='#388e3c', facecolor='#c8e6c9'); ax_a.add_patch(d5)
+d6 = patches.Rectangle((0.59, 0.48), 0.06, 0.18, linewidth=0.6, edgecolor='#388e3c', facecolor='#c8e6c9'); ax_a.add_patch(d6)
+ax_a.text(0.62, 0.31, '5', ha='center', va='center', fontsize=4.2, fontweight='bold', color='#1b5e20')
+ax_a.text(0.62, 0.57, '6', ha='center', va='center', fontsize=4.2, fontweight='bold', color='#1b5e20')
+
 ax_a.annotate('', xy=(0.75, 0.15), xytext=(0.75, 0.75), arrowprops=dict(arrowstyle="->", color=c_abrs, lw=1.6))
-ax_a.text(0.75, 1.05, 'ABRS / TAGES\n(26.8 L / 6 Dishes)', ha='center', fontsize=5.0, fontweight='bold', color=c_abrs)
-ax_a.text(0.75, 0.04, 'Forced Sweep + Scrubber', ha='center', fontsize=4.6, color=c_abrs, fontweight='bold')
+ax_a.text(0.75, 1.05, 'ABRS / TAGES GIS\n(3-Column Carousel)', ha='center', fontsize=4.8, fontweight='bold', color=c_abrs)
+ax_a.text(0.75, 0.04, 'Forced Sweep + Scrubber', ha='center', fontsize=4.4, color=c_abrs, fontweight='bold')
 ax_a.set_xlim(0, 1)
 ax_a.set_ylim(0, 1.16)
 ax_a.axis('off')

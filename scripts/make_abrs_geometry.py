@@ -2,15 +2,16 @@
 """
 make_abrs_geometry.py
 Analytic 3D STL geometry generator for NASA's Advanced Biological Research System (ABRS)
-and TAGES flight investigation (OSD-7 / OSD-16).
+and TAGES flight investigation (Paul et al. 2013, BMC Plant Biol 13:112, Fig 1; NASA OSDR OSD-7/16).
 
-Hardware Specifications:
+Structural Architecture:
 - EXPRESS Rack single middeck locker replacement volume: 440 mm (W) x 253 mm (D) x 516 mm (H)
-- Dual growth chambers (Chamber A & B) or single GIS imaging payload configuration: ~24-28 L
-- Green Fluorescent Protein Imaging System (GIS) payload carrier holding 6 square Petri dishes
-  (100 x 100 x 20 mm) in 2 tiers of 3, wrapped in 3M Micropore surgical tape along perimeter.
-- Active closed-loop recirculating airflow (2.5 - 10 CFM ~ 4.25 - 17.0 m³/h).
-- Ducted top/side supply slots and bottom return scrubber plenum.
+- Green Fluorescent Protein Imaging System (GIS) payload carrier featuring a 3-faceted frame:
+  * Right Column (x = 0.32 m): Position 1 (Bottom Tier, Primary Camera Axis) & Position 2 (Top Tier)
+  * Rear Column  (y = 0.18 m): Position 3 (Bottom Tier) & Position 4 (Top Tier)
+  * Left Column  (x = 0.12 m): Position 5 (Bottom Tier) & Position 6 (Top Tier) + Lateral LED Driver Board
+- All 6 plates are 100 x 100 x 20 mm square Petri dishes wrapped with 3M Micropore surgical tape.
+- Top supply air distribution slots and bottom return catalytic scrubber plenum.
 """
 
 import os
@@ -47,47 +48,68 @@ def make_box_stl(name, x0, x1, y0, y1, z0, z1):
     return "".join(out)
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate NASA ABRS / TAGES Geometry STLs")
+    parser = argparse.ArgumentParser(description="Generate NASA ABRS / TAGES GIS Carrier Geometry STLs")
     parser.add_argument('--case', type=str, default='cases/abrs_tages', help='Case directory')
     args = parser.parse_args()
 
     out_dir = Path(args.case) / 'constant' / 'triSurface'
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    # 1. ABRS Locker Chassis: 440 x 253 x 516 mm (in meters)
+    # 1. ABRS Locker Chassis: 440 x 253 x 516 mm
     chassis = make_box_stl('abrs_chassis', 0.0, 0.440, 0.0, 0.253, 0.0, 0.516)
     
-    # 2. Supply Inlets: Top plenum slots at z = 0.500 to 0.516 m
-    inlet_left = make_box_stl('supply_inlet_left', 0.020, 0.200, 0.020, 0.040, 0.490, 0.510)
-    inlet_right = make_box_stl('supply_inlet_right', 0.240, 0.420, 0.020, 0.040, 0.490, 0.510)
+    # 2. Supply Inlets (Top plenum slots) & Exhaust Outlet (Bottom return scrubber)
+    inlet_top = make_box_stl('supply_inlet_top', 0.050, 0.390, 0.030, 0.220, 0.490, 0.510)
+    exhaust = make_box_stl('exhaust_scrubber_duct', 0.050, 0.390, 0.030, 0.220, 0.010, 0.035)
 
-    # 3. Exhaust Outlets: Bottom return scrubber plenum at z = 0.000 to 0.025 m
-    exhaust = make_box_stl('exhaust_scrubber_duct', 0.050, 0.390, 0.200, 0.233, 0.010, 0.035)
+    # 3. GIS 3-Column Structural Frame (Right, Rear, Left Facets)
+    # Right Column: x = 0.30 to 0.34 m (Holds Plate 1 Bot, Plate 2 Top)
+    # Rear Column:  y = 0.16 to 0.20 m (Holds Plate 3 Bot, Plate 4 Top)
+    # Left Column:  x = 0.10 to 0.14 m (Holds Plate 5 Bot, Plate 6 Top)
+    frame_r = make_box_stl('gis_frame_right', 0.300, 0.340, 0.050, 0.200, 0.060, 0.420)
+    frame_b = make_box_stl('gis_frame_rear',  0.100, 0.340, 0.180, 0.220, 0.060, 0.420)
+    frame_l = make_box_stl('gis_frame_left',  0.100, 0.140, 0.050, 0.200, 0.060, 0.420)
+    
+    # LED Driver Board on Outer Left Wall
+    led_board = make_box_stl('gis_led_board', 0.060, 0.080, 0.060, 0.190, 0.100, 0.380)
 
-    # 4. TAGES 6-Plate Science Carrier (2 tiers of 3 square Petri dishes: 100 x 100 x 20 mm)
+    # 4. 6 Square Petri Dishes (100 x 100 x 20 mm) in 3 columns & 2 tiers:
+    # Tier 1 (Bottom): z = 0.080 to 0.180 m
+    # Tier 2 (Top):    z = 0.260 to 0.360 m
     dishes = []
     tapes = []
-    x_offsets = [0.035, 0.170, 0.305]
-    z_offsets = [0.080, 0.260]
 
-    plate_id = 1
-    for z_off in z_offsets:
-        for x_off in x_offsets:
-            d_name = f'petri_dish_{plate_id}'
-            t_name = f'micropore_tape_seam_{plate_id}'
-            # Dish body (y = 0.080 to 0.100 m)
-            dishes.append(make_box_stl(d_name, x_off, x_off + 0.100, 0.080, 0.100, z_off, z_off + 0.100))
-            # Micropore tape seam around perimeter
-            tapes.append(make_box_stl(t_name, x_off - 0.001, x_off + 0.101, 0.098, 0.101, z_off - 0.001, z_off + 0.101))
-            plate_id += 1
+    # Position 1: Right Column, Bottom Tier (Faces Camera)
+    dishes.append(make_box_stl('plate_pos_1_bot', 0.310, 0.330, 0.070, 0.170, 0.080, 0.180))
+    tapes.append(make_box_stl('tape_seam_1',      0.308, 0.332, 0.068, 0.172, 0.078, 0.182))
+
+    # Position 2: Right Column, Top Tier
+    dishes.append(make_box_stl('plate_pos_2_top', 0.310, 0.330, 0.070, 0.170, 0.260, 0.360))
+    tapes.append(make_box_stl('tape_seam_2',      0.308, 0.332, 0.068, 0.172, 0.258, 0.362))
+
+    # Position 3: Rear Column, Bottom Tier
+    dishes.append(make_box_stl('plate_pos_3_bot', 0.170, 0.270, 0.170, 0.190, 0.080, 0.180))
+    tapes.append(make_box_stl('tape_seam_3',      0.168, 0.272, 0.168, 0.192, 0.078, 0.182))
+
+    # Position 4: Rear Column, Top Tier
+    dishes.append(make_box_stl('plate_pos_4_top', 0.170, 0.270, 0.170, 0.190, 0.260, 0.360))
+    tapes.append(make_box_stl('tape_seam_4',      0.168, 0.272, 0.168, 0.192, 0.258, 0.362))
+
+    # Position 5: Left Column, Bottom Tier
+    dishes.append(make_box_stl('plate_pos_5_bot', 0.110, 0.130, 0.070, 0.170, 0.080, 0.180))
+    tapes.append(make_box_stl('tape_seam_5',      0.108, 0.132, 0.068, 0.172, 0.078, 0.182))
+
+    # Position 6: Left Column, Top Tier
+    dishes.append(make_box_stl('plate_pos_6_top', 0.110, 0.130, 0.070, 0.170, 0.260, 0.360))
+    tapes.append(make_box_stl('tape_seam_6',      0.108, 0.132, 0.068, 0.172, 0.258, 0.362))
 
     with open(out_dir / 'abrs_chamber.stl', 'w') as f:
-        f.write(chassis + inlet_left + inlet_right + exhaust)
+        f.write(chassis + inlet_top + exhaust + frame_r + frame_b + frame_l + led_board)
 
     with open(out_dir / 'abrs_dishes.stl', 'w') as f:
         f.write("".join(dishes) + "".join(tapes))
 
-    print(f"ABRS & TAGES STLs generated in {out_dir}: abrs_chamber.stl and abrs_dishes.stl (6 square plates with micropore tape boundaries).")
+    print(f"ABRS GIS STLs successfully generated in {out_dir}: 3-column, 2-tier carousel (Plates 1-6 with micropore seams).")
 
 if __name__ == '__main__':
     main()

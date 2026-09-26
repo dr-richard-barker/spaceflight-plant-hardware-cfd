@@ -325,60 +325,85 @@
 
       if (hw === 'abrs') {
         controls.target.set(0, 2.7, 0);
-        camera.position.set(10, 8, 13);
+        camera.position.set(9.5, 8.5, 12.5);
 
         // ABRS Middeck Locker Enclosure: 440 x 253 x 516 mm
-        const locker = new THREE.Mesh(new THREE.BoxGeometry(5.2, 5.5, 3.2), boxMat);
-        locker.position.y = 2.75;
+        const locker = new THREE.Mesh(new THREE.BoxGeometry(5.4, 5.6, 3.4), boxMat);
+        locker.position.y = 2.8;
         chamberGroup.add(locker);
 
-        // Dual Chamber Divider Wall
-        const divider = new THREE.Mesh(new THREE.BoxGeometry(0.1, 5.4, 3.1), new THREE.MeshStandardMaterial({ color: 0x475569 }));
-        divider.position.set(0, 2.75, 0);
-        chamberGroup.add(divider);
-
-        // Top Supply Plenum Manifold (Ducted blue slots)
+        // Top Supply Plenum Manifold (Ducted blue distribution slots)
         const plenumMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, emissive: 0x0284c7, emissiveIntensity: 0.8 });
-        const topPlenumL = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.3, 2.8), plenumMat);
-        topPlenumL.position.set(-1.3, 5.3, 0); chamberGroup.add(topPlenumL);
-        const topPlenumR = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.3, 2.8), plenumMat);
-        topPlenumR.position.set(1.3, 5.3, 0); chamberGroup.add(topPlenumR);
+        const topPlenum = new THREE.Mesh(new THREE.BoxGeometry(4.8, 0.3, 2.8), plenumMat);
+        topPlenum.position.set(0, 5.35, 0); chamberGroup.add(topPlenum);
 
         // Bottom Return Catalytic Scrubber Plenum
         const scrubberMat = new THREE.MeshStandardMaterial({ color: 0x10b981, emissive: 0x10b981, emissiveIntensity: 0.7 });
         const botScrubber = new THREE.Mesh(new THREE.BoxGeometry(4.8, 0.35, 2.8), scrubberMat);
-        botScrubber.position.set(0, 0.2, 0);
-        chamberGroup.add(botScrubber);
+        botScrubber.position.set(0, 0.2, 0); chamberGroup.add(botScrubber);
 
-        // TAGES 6-Plate Science Carrier (2 tiers of 3 square Petri dishes: 100 x 100 x 20 mm)
-        const x_coords = [-1.7, 0.0, 1.7];
-        const y_coords = [1.6, 3.6];
+        // GIS 3-Column Structural Frame (Black Anodized Aluminum Chassis as in Paul et al. 2013 Fig 1)
+        const frameMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6 });
+        const frameR = new THREE.Mesh(new THREE.BoxGeometry(0.35, 4.8, 1.8), frameMat);
+        frameR.position.set(1.85, 2.7, 0); chamberGroup.add(frameR);
 
-        for (let row of y_coords) {
-          for (let col of x_coords) {
-            // Square Dish Body (Acrylic)
-            const dish = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.3, 0.3), new THREE.MeshStandardMaterial({ color: 0x94a3b8, transparent: true, opacity: 0.6 }));
-            dish.position.set(col, row, 0.4);
-            chamberGroup.add(dish);
+        const frameB = new THREE.Mesh(new THREE.BoxGeometry(3.6, 4.8, 0.35), frameMat);
+        frameB.position.set(0, 2.7, -1.25); chamberGroup.add(frameB);
 
-            // Phytagel Nutrient Agar Media
-            const agar = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 0.08), new THREE.MeshStandardMaterial({ color: 0x22c55e, transparent: true, opacity: 0.7 }));
-            agar.position.set(col, row, 0.3);
-            chamberGroup.add(agar);
+        const frameL = new THREE.Mesh(new THREE.BoxGeometry(0.35, 4.8, 1.8), frameMat);
+        frameL.position.set(-1.85, 2.7, 0); chamberGroup.add(frameL);
 
-            // 3M Micropore Surgical Tape Perimeter Seam (Purple outline)
-            const tape = new THREE.Mesh(new THREE.BoxGeometry(1.35, 1.35, 0.32), new THREE.MeshStandardMaterial({ color: 0xba68c8, wireframe: true }));
-            tape.position.set(col, row, 0.4);
-            chamberGroup.add(tape);
+        // Lateral LED Driver Circuit Board on Left Wall (Green PCB with electronics)
+        const pcbMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.4 });
+        const ledPcb = new THREE.Mesh(new THREE.BoxGeometry(0.08, 4.2, 1.4), pcbMat);
+        ledPcb.position.set(-2.15, 2.8, 0); chamberGroup.add(ledPcb);
 
-            // Arabidopsis Seedling Germlings
-            for (let k = 0; k < 4; k++) {
-              const plant = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.25, 6), new THREE.MeshStandardMaterial({ color: 0x4ade80 }));
-              plant.position.set(col - 0.35 + k*0.24, row - 0.2, 0.45);
-              chamberGroup.add(plant);
-            }
+        // Camera Optical Lens Assembly (Opposite Position 1 on Right Column)
+        const camLens = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.4, 0.6, 16), new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.2 }));
+        camLens.rotation.z = Math.PI / 2;
+        camLens.position.set(0.6, 1.6, 0); chamberGroup.add(camLens);
+
+        // The 6 Numbered Plates in 3 Columns & 2 Tiers (Paul et al. 2013 Figure 1)
+        const plateConfigs = [
+          { num: 1, pos: [1.7, 1.6, 0], rotY: Math.PI / 2, tier: 'Bot (Camera Axis)' },
+          { num: 2, pos: [1.7, 3.7, 0], rotY: Math.PI / 2, tier: 'Top' },
+          { num: 3, pos: [0, 1.6, -1.1], rotY: 0,           tier: 'Bot' },
+          { num: 4, pos: [0, 3.7, -1.1], rotY: 0,           tier: 'Top' },
+          { num: 5, pos: [-1.7, 1.6, 0], rotY: -Math.PI / 2, tier: 'Bot (LED Wall)' },
+          { num: 6, pos: [-1.7, 3.7, 0], rotY: -Math.PI / 2, tier: 'Top' }
+        ];
+
+        plateConfigs.forEach(cfg => {
+          const plateGroup = new THREE.Group();
+          plateGroup.position.set(cfg.pos[0], cfg.pos[1], cfg.pos[2]);
+          plateGroup.rotation.y = cfg.rotY;
+
+          // Square Dish Body (100 x 100 x 20 mm scaled)
+          const dish = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.4, 0.25), new THREE.MeshStandardMaterial({ color: 0x94a3b8, transparent: true, opacity: 0.65 }));
+          plateGroup.add(dish);
+
+          // Phytagel Nutrient Media (Green Agar along rear wall)
+          const agar = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.3, 0.08), new THREE.MeshStandardMaterial({ color: 0x22c55e, transparent: true, opacity: 0.75 }));
+          agar.position.z = -0.06;
+          plateGroup.add(agar);
+
+          // 3M Micropore Surgical Tape Seam (Purple/Magenta perimeter border)
+          const tape = new THREE.Mesh(new THREE.BoxGeometry(1.44, 1.44, 0.27), new THREE.MeshStandardMaterial({ color: 0xba68c8, wireframe: true }));
+          plateGroup.add(tape);
+
+          // Arabidopsis Seedlings coursing along vertical agar surface
+          for (let k = -2; k <= 2; k++) {
+            const shoot = new THREE.Mesh(new THREE.SphereGeometry(0.09, 8, 8), new THREE.MeshStandardMaterial({ color: 0x4ade80 }));
+            shoot.position.set(k * 0.24, 0.35, 0.04);
+            plateGroup.add(shoot);
+
+            const root = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.65, 6), new THREE.MeshStandardMaterial({ color: 0xf8fafc }));
+            root.position.set(k * 0.24, -0.05, 0.02);
+            plateGroup.add(root);
           }
-        }
+
+          chamberGroup.add(plateGroup);
+        });
 
       } else if (hw === 'aph') {
         controls.target.set(0, 2.8, 0);
